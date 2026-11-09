@@ -3,37 +3,165 @@
 <head>
     <meta charset = "utf-8"/>
     <script type = "module" src = "./site.js"></script>
+    <link href="./src/output.css" rel="stylesheet">
+    <title>A2 Store</title>
 </head>
-<body>
+<body class="flex min-h-screen flex-col text-sm">
+
+<header class="flex items-center justify-between bg-amber-800 p-5">
+    <!--LOGO-->
+    <div class="flex items-center">
+        <!--This will have to have some JS behind it to hide the current view and load the HOME view-->
+        <a href="#" id = "logo-button"> 
+            <img/>LOGO
+        </a>
+    </div>
+    <!--Nav to views-->
+    <nav id = "nav-bar" class="flex items-center">
+        <ul class="flex items-center gap-4 text-amber-900">
+            <li class="bg-amber-100 font-semibold rounded-sm px-4 py-1.5 hover:bg-amber-200">
+                <a href="#" id = "home-view">Home</a>
+            </li>
+            <li class="text-amber-100 text-2xl">|</li>
+            <li class="bg-amber-100 font-semibold rounded-sm px-4 py-1.5 hover:bg-amber-200">
+                <a href="#" id = "browse-view">Browse</a>
+            </li>
+            <li class="text-amber-100 text-2xl">|</li>
+            <li class="bg-amber-100 font-semibold rounded-sm px-4 py-1.5 hover:bg-amber-200">
+                <a href="#" id = "category-view">Category</a>
+            </li>
+            <li class="text-amber-100 text-2xl">|</li>
+            <li class="bg-amber-100 font-semibold rounded-sm px-4 py-1.5 hover:bg-amber-200">
+                <a href="#" id = "about-view">About</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!--CART-->
+    <div id = "cart-container" class="flex items-center gap-2 text-amber-900 bg-amber-100 font-semibold rounded-sm px-4 py-2 hover:bg-amber-200">
+        <a id = "cart-view" href="#" class="flex gap-2">
+            <h2 class="">Cart</h2>
+            <div id = "cart-count" class="bg-amber-900 text-white px-2 py-0.5 rounded-sm">
+                0
+            </div>
+        </a>
+    </div>
+</header>
 
     <!---MAIN--->
-<main>
+<!-- flex-1 allows for the main container to grow to fit the whole height-->    
+<main class="flex-1 mx-15">
 
     <!---HOME VIEW--->
-    <article id = "home">
+    <article id = "home" class="w-full">
+        <!--HERO-->
+
+        <!--Want the images to take up full width. Use multiple images from the given data
+        to act as the hero. Maybe we change this? Was just the first idea-->
+        <!--Had one thought to place one image and write a function to change the image every few seconds.
+        Automatic carousel? Not sure if that is the right term.-->
+        <section id = "hero-container" class="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+            <div id = "hero-img-1" class="aspect-square bg-gray-300">
+                <img src="" alt="" class="h-full w-full object-cover"/>
+            </div>
+            <div id = "hero-img-2" class="aspect-square bg-gray-300">
+                <img src="" alt="" class="h-full w-full object-cover"/>
+            </div>
+            <div id = "hero-img-3" class="aspect-square bg-gray-300">
+                <img src="" alt="" class="h-full w-full object-cover"/>
+            </div>
+            <div id = "hero-img-4" class="aspect-square bg-gray-300">
+                <img src="" alt="" class="h-full w-full object-cover"/>
+            </div>
+            <div id = "hero-img-5" class="aspect-square bg-gray-300">
+                <img src="" alt="" class="h-full w-full object-cover"/>
+            </div>
+            <div id = "hero-img-6" class="aspect-square bg-gray-300">
+                <img src="" alt="" class="h-full w-full object-cover"/>
+            </div>
+        </section>
+        <!--NEW BRANDS -- Maybe add this? Just for more content on the HOME view-->
+        <!--FEATURED PRODUCTS-->
+        <section id = "featured-products" class="my-5">
+            <h2 class="text-3xl font-semibold mb-5">Featured</h2>
+            <div id = "product-cards" class="grid justify-center gap-6 max-w-6xl mx-auto grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(16rem,20rem))]">
+                <div id = "product-1" class="card flexbox justify-center items-center rounded-md border-1 transition-shadow hover:shadow-lg hover:shadow-black overflow:hidden">
+                    <div id = "card-img1" class="card-img p-15 min-h-80">
+                        <img src="" alt=""/>
+                    </div>
+                    <div id = "card-info1" class="card-info p-7 bg-amber-100 rounded-b-md">
+                        <p class="card-title text-lg font-semibold">Title Product</p>
+                        <p class="card-price text-stone-800 text-lg">$119.99</p>
+                        <!--Could not align only the anchor to the center. Suggestion was from StackOverflow
+                        https://stackoverflow.com/questions/73444022/tailwind-align-anchor-tag-to-center-of-screen-->
+                        <p class="text-center mt-4 font-semibold">
+                            <a class="product-link border-1 border-black px-18 py-1.5 rounded-sm hover:bg-amber-200" href="#">View Details</a>
+                        </p>
+                    </div>
+                </div>
+                <div id = "product-2" class="card flexbox justify-center items-center rounded-md border-1 transition-shadow hover:shadow-lg hover:shadow-black overflow:hidden">
+                    <div id = "card-img1" class="card-img p-15 min-h-80">
+                        <img src="" alt=""/>
+                    </div>
+                    <div id = "card-info2" class="card-info p-7 bg-amber-100 rounded-b-md">
+                        <p class="card-title text-lg font-semibold">Title Product</p>
+                        <p class="card-price text-stone-800 text-lg">$119.99</p>
+                        <!--Could not align only the anchor to the center. Suggestion was from StackOverflow
+                        https://stackoverflow.com/questions/73444022/tailwind-align-anchor-tag-to-center-of-screen-->
+                        <p class="text-center mt-4 font-semibold">
+                            <a class="product-link border-1 border-black px-18 py-1.5 rounded-sm hover:bg-amber-200" href="#">View Details</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
     </article>
 
     <!---BROWSE VIEW--->
-    <article id = "browse">
-        
+    <article id = "browse" class="hidden">
+        <h2>BROWSE VIEW</h2>
+        <div>PLACEHOLDER FOR JS VIEW SWITCHING TESTING</div>
     </article>
 
+    <!--CATEGORY VIEW-->
+    <article id = "category" class="hidden">
+        <h2>CATEGORY VIEW</h2>
+        <div>PLACEHOLDER FOR JS VIEW SWITCHING TESTING</div>
+    </article>
     <!---SINGLE PRODUCT VIEW--->
-    <article id = "single-product">
-        
+    <article id = "single-product" class="hidden">
+        <h2>SINGLE PRODUCT VIEW</h2>
+        <div>PLACEHOLDER FOR JS VIEW SWITCHING TESTING</div>
     </article>
 
     <!---CART VIEW--->
-    <article id = "cart">
-        
+    <article id = "cart" class="hidden">
+        <h2>CART VIEW</h2>
+        <div>PLACEHOLDER FOR JS VIEW SWITCHING TESTING</div>
     </article>
 
     <!---ABOUT VIEW--->
-    <article id = "about">
-        
+    <article id = "about" class="hidden">
+        <h2>ABOUT VIEW</h2>
+        <div>PLACEHOLDER FOR JS VIEW SWITCHING TESTING</div>
     </article>
 </main>
+
+<footer class="bg-amber-800 p-5 text-gray-200">
+    <div id = "company-footer" class="flex flex-col gap-2">
+        <section>
+            <a href="https://github.com/psatikumar1/COMP_3612_A2" target = "_blank" class="hover:underline">GitHub</a>
+        </section>
+        <section>
+            <a href="#" class="hover:underline">About Us</a>
+        </section>
+    </div>
+    <div>
+        <hr class="mt-4 mb-4"/>
+        <p class="text-amber-100 text-sm">&copy 2026 COMP3612 Assignment 2</p>
+    </div>
+</footer>
 
 </body>
 </html>
