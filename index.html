@@ -12,39 +12,37 @@
     <!--LOGO-->
     <div class="flex items-center">
         <!--This will have to have some JS behind it to hide the current view and load the HOME view-->
-        <a href="#" id = "logo-button"> 
+        <button type="button" id = "logo-button" class="hover:cursor-pointer"> 
             <img/>LOGO
-        </a>
+        </button>
     </div>
     <!--Nav to views-->
-    <nav id = "nav-bar" class="flex items-center">
+    <nav id = "nav-bar" class="flex items-center justify-center">
         <ul class="flex items-center gap-4 text-amber-900">
-            <li class="bg-amber-100 font-semibold rounded-sm px-4 py-1.5 hover:bg-amber-200">
-                <a href="#" id = "home-view">Home</a>
+            <li>
+                <button type="button" id = "home-view-btn" class="nav-button bg-amber-100 font-semibold rounded-sm px-4 py-1.5 hover:bg-amber-200 hover:cursor-pointer">Home</button>
             </li>
-            <li class="text-amber-100 text-2xl">|</li>
-            <li class="bg-amber-100 font-semibold rounded-sm px-4 py-1.5 hover:bg-amber-200">
-                <a href="#" id = "browse-view">Browse</a>
+            <li class="bg-amber-100 w-[1px] h-8"></li>
+            <li>
+                <button type="button" id = "browse-view-btn" class="nav-button bg-amber-100 font-semibold rounded-sm px-4 py-1.5 hover:bg-amber-200 hover:cursor-pointer">Browse</button>
             </li>
-            <li class="text-amber-100 text-2xl">|</li>
-            <li class="bg-amber-100 font-semibold rounded-sm px-4 py-1.5 hover:bg-amber-200">
-                <a href="#" id = "category-view">Category</a>
+            <li class="bg-amber-100 w-[1px] h-8"></li>
+            <li>
+                <button type="button" id = "category-view-btn" class="nav-button bg-amber-100 font-semibold rounded-sm px-4 py-1.5 hover:bg-amber-200 hover:cursor-pointer">Category</button>
             </li>
-            <li class="text-amber-100 text-2xl">|</li>
-            <li class="bg-amber-100 font-semibold rounded-sm px-4 py-1.5 hover:bg-amber-200">
-                <a href="#" id = "about-view">About</a>
+            <li class="bg-amber-100 w-[1px] h-8"></li>
+            <li>
+                <button type="button" id = "about-view-btn" class="nav-button bg-amber-100 font-semibold rounded-sm px-4 py-1.5 hover:bg-amber-200 hover:cursor-pointer">About</button>
             </li>
         </ul>
     </nav>
 
     <!--CART-->
-    <div id = "cart-container" class="flex items-center gap-2 text-amber-900 bg-amber-100 font-semibold rounded-sm px-4 py-2 hover:bg-amber-200">
-        <a id = "cart-view" href="#" class="flex gap-2">
-            <h2 class="">Cart</h2>
-            <div id = "cart-count" class="bg-amber-900 text-white px-2 py-0.5 rounded-sm">
-                0
-            </div>
-        </a>
+    <div id = "nav-cart-container" class="flex gap-2 text-amber-900 bg-amber-100 font-semibold rounded-sm px-4 py-2 hover:bg-amber-200 hover:cursor-pointer">
+        <button type="button" id = "cart-view" href="#" class="items-center flex gap-2 hover:cursor-pointer">
+            <span class="items-center">Cart</span>
+            <span id="cart-count" class="bg-amber-900 text-white px-2 py-0.5 rounded-sm">0</span>
+        </button>
     </div>
 </header>
 
@@ -53,7 +51,7 @@
 <main class="flex-1 px-40">
 
     <!---HOME VIEW--->
-    <article id = "home" class="w-full hidden">
+    <article id = "home" class="w-full">
         <!--HERO-->
 
         <!--Want the images to take up full width. Use multiple images from the given data
@@ -119,13 +117,13 @@
     </article>
 
     <!---BROWSE VIEW--->
-    <article id = "browse" class="hidden">
+    <article id = "browse" class="w-full hidden">
         <h2>BROWSE VIEW</h2>
         <div>PLACEHOLDER FOR JS VIEW SWITCHING TESTING</div>
     </article>
 
     <!--CATEGORY VIEW-->
-    <article id = "category" class="w-full">
+    <article id = "category" class="w-full hidden">
 
         <section id="category-hero" class="w-full flex flex-col items-center">
             <img src="https://cdn.dummyjson.com/product-images/furniture/bedside-table-african-cherry/thumbnail.webp" alt="category-hero-img">
@@ -167,20 +165,21 @@
             </li>
         </ul>
     </article>
+
     <!---SINGLE PRODUCT VIEW--->
-    <article id = "single-product" class="hidden">
+    <article id = "single-product" class="w-full hidden">
         <h2>SINGLE PRODUCT VIEW</h2>
         <div>PLACEHOLDER FOR JS VIEW SWITCHING TESTING</div>
     </article>
 
     <!---CART VIEW--->
-    <article id = "cart" class="hidden">
+    <article id = "cart" class="w-full hidden">
         <h2>CART VIEW</h2>
         <div>PLACEHOLDER FOR JS VIEW SWITCHING TESTING</div>
     </article>
 
     <!---ABOUT VIEW--->
-    <article id = "about" class="hidden">
+    <article id = "about" class="w-full hidden">
         <h2>ABOUT VIEW</h2>
         <div>PLACEHOLDER FOR JS VIEW SWITCHING TESTING</div>
     </article>
