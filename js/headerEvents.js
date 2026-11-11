@@ -24,6 +24,7 @@ function setActiveView(newView) {
 
 export function addHeaderEventListeners() {
     const headerBtnList = document.querySelectorAll("header button");
+    
     for (let btn of headerBtnList) {
         const btnID = btn.getAttribute("id");
         const btnViewTarget = "#" + (btnID.split("-"))[0];

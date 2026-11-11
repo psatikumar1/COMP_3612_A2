@@ -33,3 +33,68 @@ No strict rules, but it is probably going to make things easier to give stuff an
 | Furniture | Mens Shirts | Laptops | | Beauty |
 | Home Decoration | Mens Shoes | Mobile Accessories| | Fragrances |
 | Kitchen Accessories | Mens Watches |
+
+# Product Information
+- Nothing is out of stock
+  - The only options in the data are "Low Stock" and "In Stock"
+- Everything has a discount applied to it
+**Every Product has the following fields**
+```JSON
+      "id": ,
+      "title": "",
+      "description": "",
+      "category": "",
+      "price": ,
+      "discountPercentage": ,
+      "rating": ,
+      "stock": ,
+      "tags": [
+        ""
+      ],
+      "brand": "",
+      "sku": "",
+      "weight": ,
+      "dimensions": {
+        "width": ,
+        "height": ,
+        "depth": 
+      },
+      "warrantyInformation": "",
+      "shippingInformation": "",
+      "availabilityStatus": "",
+      "reviews": [
+        {
+          "rating": ,
+          "comment": "",
+          "date": "",
+          "reviewerName": "",
+          "reviewerEmail": ""
+        },
+        {
+          "rating": 4,
+          "comment": "",
+          "date": "",
+          "reviewerName": "",
+          "reviewerEmail": ""
+        },
+        {
+          "rating": 5,
+          "comment": "",
+          "date": "",
+          "reviewerName": "",
+          "reviewerEmail": ""
+        }
+      ],
+      "returnPolicy": "",
+      "minimumOrderQuantity": ,
+      "meta": {
+        "createdAt": "",
+        "updatedAt": "",
+        "barcode": "",
+        "qrCode": ""
+      },
+      "images": [
+        ""
+      ],
+      "thumbnail": ""
+```
