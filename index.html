@@ -8,7 +8,7 @@
 </head>
 <body class="flex min-h-screen flex-col text-sm">
 
-<header class="flex items-center justify-between bg-amber-800 p-5">
+<header class="flex items-center justify-between bg-amber-800 py-5 px-40">
     <!--LOGO-->
     <div class="flex items-center">
         <!--This will have to have some JS behind it to hide the current view and load the HOME view-->
@@ -50,10 +50,10 @@
 
     <!---MAIN--->
 <!-- flex-1 allows for the main container to grow to fit the whole height-->    
-<main class="flex-1 mx-15">
+<main class="flex-1 px-40">
 
     <!---HOME VIEW--->
-    <article id = "home" class="w-full">
+    <article id = "home" class="w-full hidden">
         <!--HERO-->
 
         <!--Want the images to take up full width. Use multiple images from the given data
@@ -85,7 +85,7 @@
         <section id = "featured-products" class="my-5">
             <h2 class="text-3xl font-semibold mb-5">Featured</h2>
             <div id = "product-cards" class="grid justify-center gap-6 max-w-6xl mx-auto grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(16rem,20rem))]">
-                <div id = "product-1" class="card flexbox justify-center items-center rounded-md border-1 transition-shadow hover:shadow-lg hover:shadow-black overflow:hidden">
+                <div id = "product-1" class="card flexbox justify-center items-center rounded-md border-1 transition-shadow hover:shadow-md hover:shadow-black overflow:hidden">
                     <div id = "card-img1" class="card-img p-15 min-h-80">
                         <img src="" alt=""/>
                     </div>
@@ -99,7 +99,7 @@
                         </p>
                     </div>
                 </div>
-                <div id = "product-2" class="card flexbox justify-center items-center rounded-md border-1 transition-shadow hover:shadow-lg hover:shadow-black overflow:hidden">
+                <div id = "product-2" class="card flexbox justify-center items-center rounded-md border-1 transition-shadow hover:shadow-md hover:shadow-black overflow:hidden">
                     <div id = "card-img1" class="card-img p-15 min-h-80">
                         <img src="" alt=""/>
                     </div>
@@ -125,9 +125,47 @@
     </article>
 
     <!--CATEGORY VIEW-->
-    <article id = "category" class="hidden">
-        <h2>CATEGORY VIEW</h2>
-        <div>PLACEHOLDER FOR JS VIEW SWITCHING TESTING</div>
+    <article id = "category" class="w-full">
+
+        <section id="category-hero" class="w-full flex flex-col items-center">
+            <img src="https://cdn.dummyjson.com/product-images/furniture/bedside-table-african-cherry/thumbnail.webp" alt="category-hero-img">
+            <h2>EXAMPLE HERO IMAGE WE WILL CHANGE THIS</h2>
+        </section>
+
+        <h2 class="text-center my-10 text-2xl font-semibold text-amber-900">Shop by Category</h2>
+        <ul class="category-list mb-15 grid justify-center gap-6 w-full mx-auto grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(10rem,15rem))]">
+            <li class="category-option text-center rounded-xl hover:shadow-md hover:bg-amber-100">
+                <!--I found this data-category attribute when I was looking at Sporting Life's website HTML-->
+                <button type="button" data-category="home" class="hover:cursor-pointer">
+                    <img src="https://cdn.dummyjson.com/product-images/furniture/bedside-table-african-cherry/thumbnail.webp" alt="home category button" />
+                    <span class="text-2xl text-amber-900">Home</span>
+                </button>
+            </li>
+            <li class="category-option text-center rounded-xl hover:shadow-md hover:bg-amber-100">
+                <button type="button" data-category="mens" class="hover:cursor-pointer">
+                    <img src="https://cdn.dummyjson.com/product-images/mens-shirts/man-short-sleeve-shirt/thumbnail.webp" alt="mens category button"/>
+                    <span class="text-2xl text-amber-900">Mens</span>
+                </button>
+            </li>
+            <li class="category-option text-center rounded-xl hover:shadow-md hover:bg-amber-100">
+                <button type="button" data-category="tech" class="hover:cursor-pointer">
+                    <img src="https://cdn.dummyjson.com/product-images/laptops/apple-macbook-pro-14-inch-space-grey/thumbnail.webp" alt="tech category button"/>
+                    <span class="text-2xl text-amber-900">Tech</span>
+                </button>
+            </li>
+            <li class="category-option text-center rounded-xl hover:shadow-md hover:bg-amber-100">
+                <button type="button" data-category="groceries" class="hover:cursor-pointer">
+                    <img src="https://cdn.dummyjson.com/product-images/groceries/beef-steak/thumbnail.webp" alt="groceries category button"/>
+                    <span class="text-2xl text-amber-900">Groceries</span>
+                </button>
+            </li>
+            <li class="category-option text-center rounded-xl hover:shadow-md hover:bg-amber-100">
+                <button type="button" data-category="cosmetics-personal-care" class="hover:cursor-pointer">
+                    <img src="https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp" alt="cosmetics and personal care button"/>
+                    <span class="text-2xl text-amber-900">Cosmetics & Personal Care</span>
+                </button>
+            </li>
+        </ul>
     </article>
     <!---SINGLE PRODUCT VIEW--->
     <article id = "single-product" class="hidden">
@@ -148,19 +186,22 @@
     </article>
 </main>
 
-<footer class="bg-amber-800 p-5 text-gray-200">
-    <div id = "company-footer" class="flex flex-col gap-2">
-        <section>
-            <a href="https://github.com/psatikumar1/COMP_3612_A2" target = "_blank" class="hover:underline">GitHub</a>
-        </section>
-        <section>
-            <a href="#" class="hover:underline">About Us</a>
-        </section>
-    </div>
-    <div>
-        <hr class="mt-4 mb-4"/>
-        <p class="text-amber-100 text-sm">&copy 2026 COMP3612 Assignment 2</p>
-    </div>
+<footer class="px-40 bg-amber-800 p-5 text-gray-200">
+    <nav>
+        <h2 class="text-[15px] font-semibold">Company</h2>
+        <ul class="mt-2 mb-4">
+            <li class="mb-2">
+                <a href="#" class="hover:underline">About Us</a>
+            </li>
+            <li class="mb-2">
+                <a href="https://github.com/psatikumar1/COMP_3612_A2" target="_blank" class="hover:underline">GitHub</a>
+            </li>
+        </ul>
+    </nav>
+    <section>
+        <hr/>
+        <p class="mt-4">Copyright &copy COMP3612 2026</p>
+    </section>
 </footer>
 
 </body>
