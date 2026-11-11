@@ -345,6 +345,15 @@
   .flex-col {
     flex-direction: column;
   }
+  .flex-row {
+    flex-direction: row;
+  }
+  .place-content-end {
+    place-content: end;
+  }
+  .place-content-start {
+    place-content: start;
+  }
   .items-center {
     align-items: center;
   }
@@ -354,6 +363,9 @@
   .justify-center {
     justify-content: center;
   }
+  .justify-start {
+    justify-content: flex-start;
+  }
   .gap-2 {
     gap: calc(var(--spacing) * 2);
   }
@@ -362,6 +374,9 @@
   }
   .gap-6 {
     gap: calc(var(--spacing) * 6);
+  }
+  .gap-15 {
+    gap: calc(var(--spacing) * 15);
   }
   .rounded-md {
     border-radius: var(--radius-md);
@@ -419,6 +434,9 @@
   }
   .px-4 {
     padding-inline: calc(var(--spacing) * 4);
+  }
+  .px-5 {
+    padding-inline: calc(var(--spacing) * 5);
   }
   .px-10 {
     padding-inline: calc(var(--spacing) * 10);
