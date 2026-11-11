@@ -51,7 +51,7 @@
 <main class="flex-1 px-40">
 
     <!---HOME VIEW--->
-    <article id = "home" class="view w-full">
+    <article id = "home" class="view w-full hidden">
         <!--HERO-->
         <div>
             <!--Image taken and edited by Ty W. MRU Logo from www.mtroyal.ca-->
@@ -120,9 +120,49 @@
     </article>
 
     <!---BROWSE VIEW--->
-    <article id = "browse" class="view w-full hidden">
-        <h2>BROWSE VIEW</h2>
-        <div>PLACEHOLDER FOR JS VIEW SWITCHING TESTING</div>
+    <article id = "browse" class="view flex flex-row my-4 w-full justify-start w-full">
+        <section id="filter" class="flex flex-col gap-4 px-5 py-2 bg-gray-300 w-[20%]">
+            <h2 class="text-amber-900 font-semibold text-xl">Filters</h2>
+            <div id="brand-accordion">
+                <button id="brands-filter-dropdown" class="flex w-full items-center justify-between hover:cursor-pointer">
+                    <h2 class="font-semibold text-lg">Brand</h2>
+                    <img src="assets/arrow_drop_down.svg" alt="brands drop down hide button" class=""/>
+                </button> 
+            </div>
+            <div id="category-accordion">
+                <button id="category-filter-dropdown" class="flex w-full items-center justify-between hover:cursor-pointer">
+                    <h2 class="font-semibold text-lg">Categories</h2>
+                    <img src="assets/arrow_drop_down.svg" alt="category drop down hide button" class=""/>
+                </button>
+            </div>
+            <div id="tags-accordion">
+                <button id="tags-filter-dropdown" class="flex w-full items-center justify-between hover:cursor-pointer">
+                    <h2 class="font-semibold text-lg">Tags</h2>
+                    <img src="assets/arrow_drop_down.svg" alt="tags drop down hide button" class=""/>
+                </button>
+            </div>
+            <div id="price-accordion">
+                <button id="price-filter-dropdown" class="flex w-full items-center justify-between hover:cursor-pointer">
+                    <h2 class="font-semibold text-lg">Price</h2>
+                    <img src="assets/arrow_drop_down.svg" alt="price drop down hide button" class=""/>
+                </button>
+            </div>
+            <div id="rating-accordion">
+                <button id="rating-filter-dropdown" class="flex w-full items-center justify-between hover:cursor-pointer">
+                    <h2 class="font-semibold text-lg">Rating</h2>
+                    <img src="assets/arrow_drop_down.svg" alt="rating drop down hide button" class=""/>
+                </button>
+            </div>
+
+        </section>
+        <section id="result" class="bg-gray-300 px-5 py-2">
+            <section id="selected-filters">
+
+            </section>
+            <section id="search-results">
+                
+            </section>
+        </section>
     </article>
 
     <!--CATEGORY VIEW-->
