@@ -18,7 +18,7 @@ function showCart(){
 }
 
 function showView(viewSelector) {
-    const views = document.querySelectorAll("article");
+    const views = document.querySelectorAll(".page-view");
 
     //Hides all pages
     for (let view of views){
