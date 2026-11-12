@@ -176,10 +176,83 @@
     </article>
 
     <!---CART VIEW--->
-    <article id = "cart" class="page-view w-full hidden">
-        <h2>CART VIEW</h2>
-        <div>PLACEHOLDER FOR JS VIEW SWITCHING TESTING</div>
+    <article id = "cart" class="page-view w-full hidden py-10">
+        <h2 class = "mb-10 text-center text-3xl font-semibold">Shopping Cart</h2>
+        <p id = "cart-empty-message">Your shopping cart is empty.</p>
+        <table class = "w-full text-left">
+            <thread class = "border-b border-stone-300"> <!--https://tailwindcss.com/docs/border-color-->
+                <tr class = "pb-3">
+                    <th class = "pb-3">Items</th>
+                    <th class = "pb-3 text-right">Price</th>
+                    <th class = "pb-3 text-center">Quantity</th>
+                    <th class = "pb-3 text-right">Subtotal</th>
+                </tr>
+            </thread>
+
+            <tbody class = "cart-items">
+                <!--Temp row used for a styling example-->
+                <tr class="border-b border-stone-200">
+                <td class="py-4 pr-4">
+                    <div class="flex items-center gap-4">
+                        <button type="button" class="text-sm text-amber-900 underline">
+                            Remove
+                        </button>
+
+                        <img
+                            src="https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp"
+                            alt="Essence Mascara Lash Princess"
+                            class="h-20 w-20 object-contain"
+                        >
+
+                        <span>Essence Mascara Lash Princess</span>
+                    </div>
+                </td>
+                <td class="text-right">$9.99</td>
+                <td class="text-center">2</td>
+                <td class="text-right">$19.98</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <section class = "mt-10 grid gap-10 md:grid cols-2">
+            <section>
+                <h3 class = "mb-3 text-xl font-semibold">Delivery</h3>
+                <section class = "mb-4 block">
+                    <label>
+                        <p>Method</p>
+                        <select class = "delivery-method mt-1 block w-full rounded-sm border
+                                             border-stone-200 bg-white">
+                            <option>Standard</option>
+                            <option>Express</option>
+                            <option>Priority</option>
+                        </select>
+                    </label>
+                
+                <label class = "block">
+                    <p>Destination</p>
+                    <select class = "delivery-method mt-1 block w-full rounded-sm border
+                                             border-stone-200 bg-white">
+                        <option>Canada</option>
+                        <option>United States</option>
+                        <option>International</option>
+                    </select>
+                </label>
+            </section>
+        </section>
+
+            <section>
+                <h3 class = "mb-3 text-xl font-semibold">Summary</h3>
+                <p class = "mb-3 flex justify-between">Merchandise</p>
+                <p class = "mb-3 flex justify-between">Shipping</p>
+                <p class = "mb-3 flex justify-between">Tax</p>
+                <p class = "mb-3 flex justify-between"><strong>Total</strong></p>
+            </section>
+            <button type = "button" class = "checkout-button mt-4 w-full rounded-sm bg-sky-800
+                py-2 font-semibold text-white hover:bg-sky-600">
+                Checkout</button>
+        <section>
     </article>
+
 
     <!---ABOUT VIEW--->
     <article id = "about" class="w-full hidden">
