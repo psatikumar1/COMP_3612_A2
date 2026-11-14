@@ -98,15 +98,24 @@
 
     <!---BROWSE VIEW--->
     <article id = "browse" class="page-view flex flex-row my-4 w-full justify-start w-full">
-        <section id="filter" class="flex flex-col gap-4 px-5 py-2 bg-gray-300 w-[20%]">
-            <h2 class="text-amber-900 font-semibold text-xl">Filters</h2>
+        <section id="filter" class="flex flex-col gap-4 px-5 py-2 bg-stone-100 w-[20%] h-max">
+            <div class="flex justify-between items-center">
+                <h2 class="text-amber-900 font-semibold text-xl">Filters</h2>
+                <!--THIS IS HIDDEN UNTIL A FILTER IS SELECTED-->
+                <button id="reset-filters" class="remove-filter-button flex items-center gap-1 border border-stone-300 p-1 hover:bg-stone-300 hidden">
+                    <img src="assets/x_button.svg" class="w-4 h-4">
+                    <span class="filter-text pb-0.5">Reset Filters</span>
+                </button>
+            </div>
             <div id="brand-accordion">
                 <button id="brands-filter-dropdown" class="flex w-full items-center justify-between hover:cursor-pointer">
                     <h2 class="font-semibold text-lg">Brand</h2>
                     <img src="assets/arrow_drop_down.svg" alt="brands drop down hide button" class="rotate-90 duration-200"/>
                 </button>
                 <!--Button needs to drop down the list. BELOW IS FOR TESTING. COMMENT OUT AND LEAVE AS EXAMPLE -->
-                <ul id="brands-dropdown-list" class="hidden transition-all duration-1000 ease-out">
+                <ul id="brands-dropdown-list" class="hidden transition-all ease-out">
+                    <!--THIS IS AN EXAMPLE TO FOLLOW WHEN CREATING THE LIST ITEMS IN JAVASCRIPT. Must programmatically
+                    create these <li> tags based on the data provided -->
                     <li class="ml-2">
                         <label class="flex hover:cursor-pointer">
                             <input type="checkbox"/>
@@ -120,13 +129,13 @@
                     <h2 class="font-semibold text-lg">Categories</h2>
                     <img src="assets/arrow_drop_down.svg" alt="category drop down hide button" class="rotate-90 duration-200"/>
                 </button>
-                <ul id="category-dropdown-list" class="hidden transition-all duration-1000 ease-out">
-                    <li class="ml-2">
+                <ul id="category-dropdown-list" class="hidden transition-all ease-out">
+                    <!-- <li class="ml-2">
                         <label class="flex hover:cursor-pointer">
                             <input type="checkbox"/>
                             <span class="pl-2 text-[16px]">Essence</span>
                         </label>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
             <div id="tags-accordion">
@@ -134,13 +143,13 @@
                     <h2 class="font-semibold text-lg">Tags</h2>
                     <img src="assets/arrow_drop_down.svg" alt="tags drop down hide button" class="rotate-90 duration-200"/>
                 </button>
-                <ul id="tags-dropdown-list" class="hidden transition-all duration-1000 ease-out">
-                    <li class="ml-2">
+                <ul id="tags-dropdown-list" class="hidden transition-all ease-out">
+                    <!-- <li class="ml-2">
                         <label class="flex hover:cursor-pointer">
                             <input type="checkbox"/>
                             <span class="pl-2 text-[16px]">Essence</span>
                         </label>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
             <div id="price-accordion">
@@ -148,13 +157,13 @@
                     <h2 class="font-semibold text-lg">Price</h2>
                     <img src="assets/arrow_drop_down.svg" alt="price drop down hide button" class="rotate-90 duration-200"/>
                 </button>
-                <ul id="price-dropdown-list" class="hidden transition-all duration-1000 ease-out">
-                    <li class="ml-2">
+                <ul id="price-dropdown-list" class="hidden transition-all ease-out">
+                    <!-- <li class="ml-2">
                         <label class="flex hover:cursor-pointer">
                             <input type="checkbox"/>
                             <span class="pl-2 text-[16px]">Essence</span>
                         </label>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
             <div id="rating-accordion">
@@ -162,20 +171,41 @@
                     <h2 class="font-semibold text-lg">Rating</h2>
                     <img src="assets/arrow_drop_down.svg" alt="rating drop down hide button" class="rotate-90 duration-200"/>
                 </button>
-                <ul id="rating-dropdown-list" class="hidden transition-all duration-1000 ease-out">
-                    <li class="ml-2">
+                <ul id="rating-dropdown-list" class="hidden transition-all ease-out">
+                    <!-- <li class="ml-2">
                         <label class="flex hover:cursor-pointer">
                             <input type="checkbox"/>
                             <span class="pl-2 text-[16px]">Essence</span>
                         </label>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
 
         </section>
-        <section id="result" class="bg-gray-300 px-5 py-2">
-            <section id="selected-filters">
-
+        <section id="result" class="ml-2 bg-stone-100 px-5 py-2 w-full h-lvh">
+            <div class="flex items-center gap-4">
+                <div id="sort-order-container" class="border border-stone-300 rounded-sm p-2">
+                    <!--Use a "change" listener for the entire select-->
+                    <select id="sort-order-dropdown" class="text-stone-600 hover:cursor-pointer">
+                        <option value="P-Name_AZ" selected>Product Name (A-Z)</option>
+                        <option value="P-Name_ZA">Product Name (Z-A)</option>
+                        <option value="Price_LH">Price (Low to High)</option>
+                        <option value="Price_HL">Price (High to Low)</option>
+                        <option value="Category">Category</option>
+                    </select>
+                </div>
+            </div>
+            <section id="selected-filters" class="flex justify-start items-center gap-4 mt-4">
+                <h2 class="text-lg font-semibold">Selected Filters:</h2>
+                <ul class="flex gap-4">
+                    <!--This is the template we will use for generating these with JS-->
+                    <li>
+                        <button class="remove-filter-button flex items-center gap-1 border border-stone-300 p-1 hover:bg-stone-300">
+                            <img src="assets/x_button.svg" class="w-4 h-4 invisible hover:visible">
+                            <span class="filter-text pb-0.5">Essence</span>
+                        </button>
+                    </li>
+                </ul>
             </section>
             <section id="search-results">
 
