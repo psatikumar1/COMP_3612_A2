@@ -17,19 +17,19 @@ export function setHeaderEventListeners() {
 //
 //---For helping to swtich between page views---
 //
-function showHome(){
+export function showHome(){
     showView("#home");
 }
 
-function showBrowse(){
+export function showBrowse(){
     showView("#browse");
 }
 
-function showCategory(){
+export function showCategory(){
     showView("#category");
 }
 
-function showCart(){
+export function showCart(){
     showView("#cart");
 }
 
