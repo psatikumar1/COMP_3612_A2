@@ -98,7 +98,7 @@
 
     <!---BROWSE VIEW--->
     <article id = "browse" class="page-view flex flex-row my-4 w-full justify-start w-full">
-        <section id="filter" class="flex flex-col gap-4 px-5 py-2 bg-stone-100 w-[20%] h-max">
+        <section id="filter" class="flex flex-col gap-4 px-5 py-2 bg-stone-100 min-w-60 h-max">
             <div class="flex justify-between items-center">
                 <h2 class="text-amber-900 font-semibold text-xl">Filters</h2>
                 <!--THIS IS HIDDEN UNTIL A FILTER IS SELECTED-->
@@ -116,12 +116,12 @@
                 <ul id="brands-dropdown-list" class="hidden transition-all ease-out">
                     <!--THIS IS AN EXAMPLE TO FOLLOW WHEN CREATING THE LIST ITEMS IN JAVASCRIPT. Must programmatically
                     create these <li> tags based on the data provided -->
-                    <li class="ml-2">
+                    <!-- <li class="ml-2">
                         <label class="flex hover:cursor-pointer">
                             <input type="checkbox"/>
                             <span class="pl-2 text-[16px]">Essence</span>
                         </label>
-                    </li>
+                    </li> -->
                 </ul> 
             </div>
             <div id="category-accordion">
@@ -182,7 +182,7 @@
             </div>
 
         </section>
-        <section id="result" class="ml-2 bg-stone-100 px-5 py-2 w-full h-lvh">
+        <section id="result" class="flex-1 ml-2 bg-stone-100 px-5 py-2 w-full">
             <div class="flex items-center gap-4">
                 <div id="sort-order-container" class="border border-stone-300 rounded-sm p-2">
                     <!--Use a "change" listener for the entire select-->
@@ -198,17 +198,40 @@
             <section id="selected-filters" class="flex justify-start items-center gap-4 mt-4">
                 <h2 class="text-lg font-semibold">Selected Filters:</h2>
                 <ul class="flex gap-4">
-                    <!--This is the template we will use for generating these with JS-->
+                    <!-- This is the template we will use for generating these with JS
                     <li>
-                        <button class="remove-filter-button flex items-center gap-1 border border-stone-300 p-1 hover:bg-stone-300">
-                            <img src="assets/x_button.svg" class="w-4 h-4 invisible hover:visible">
+                        CREDIT
+                        The button will only show the X in the <img> tag when hovering. "hidden group-hover:block" applied to <img> and "group" applied to <button> are from this Stackoverflow answer
+                            https://stackoverflow.com/a/67401616
+                        <button class="remove-filter-button group flex items-center gap-1 border border-stone-300 p-1 hover:bg-stone-300">
+                            <img src="assets/x_button.svg" class="w-4 h-4 hidden group-hover:block">
                             <span class="filter-text pb-0.5">Essence</span>
                         </button>
-                    </li>
+                    </li> -->
                 </ul>
             </section>
-            <section id="search-results">
-
+            <section id="search-results" class="my-4 grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- <div class="product-card w-full h-max flex flex-col items-center">
+                    <div class="product-card-button w-full">
+                        <div class="product-card-img bg-stone-200 hover:cursor-pointer aspect-square">
+                            <img src="https://cdn.dummyjson.com/product-images/fragrances/calvin-klein-ck-one/thumbnail.webp" class="w-full">
+                        </div>
+                        <div class="product-info text-left grid gap-1 mt-2">
+                            <a href="#" class="hover:cursor-pointer hover:underline text-[16px] grid gap-1">
+                                <h2 class="product-card-brand font-semibold">Calvin Klein</h2>
+                                <h3 class="product-card-name">Calvin Klein CK One</h3>
+                            </a>
+                            <div class="product-card-price flex flex-wrap gap-2">
+                                <p class="original-product-price strikethrough"><s>$49.99</s></p>
+                                <p class="discounted-product-price text-red-800">$49.05</p>
+                                <p class="percent-discount text-red-800">(1.89% off)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="add-to-cart-btn my-1.5 bg-stone-800 rounded-md w-full text-white text-[16px] font-semibold py-1.5 hover:cursor-pointer hover:bg-stone-700">
+                        Add to Cart
+                    </button>
+                </div> -->
             </section>
         </section>
     </article>
@@ -356,7 +379,7 @@
     </article>
 </main>
 
-<footer class="px-40 bg-amber-800 p-5 text-gray-200">
+<footer class="px-40 bg-amber-800 p-5 text-gray-200 items-bottom">
     <nav>
         <h2 class="text-[15px] font-semibold">Company</h2>
         <ul class="mt-2 mb-4">
