@@ -12,7 +12,7 @@
     <!--LOGO-->
     <div class="items-center">
         <!--This will have to have some JS behind it to hide the current view and load the HOME view-->
-        <button type="button" id = "logo-btn" class="hover:cursor-pointer"> 
+        <button type="button" id = "logo-btn" data-view="home" class="hover:cursor-pointer"> 
             <img src="assets/comp3612_logo.webp" class="overflow-none h-15 min-w-full" />
         </button>
     </div>
@@ -20,26 +20,26 @@
     <nav id = "nav-bar" class="flex items-center justify-center">
         <ul class="flex items-center gap-4 text-amber-900">
             <li>
-                <button type="button" id = "home-view-btn" class="nav-button bg-amber-100 font-semibold rounded-sm px-4 py-1.5 hover:bg-amber-200 hover:cursor-pointer">Home</button>
+                <button type="button" id = "home-view-btn" data-view="home" class="nav-button bg-amber-100 font-semibold rounded-sm px-4 py-1.5 hover:bg-amber-200 hover:cursor-pointer">Home</button>
             </li>
             <li class="bg-amber-100 w-[1px] h-8"></li>
             <li>
-                <button type="button" id = "browse-view-btn" class="nav-button bg-amber-100 font-semibold rounded-sm px-4 py-1.5 hover:bg-amber-200 hover:cursor-pointer">Browse Products</button>
+                <button type="button" id = "browse-view-btn" data-view="browse" class="nav-button bg-amber-100 font-semibold rounded-sm px-4 py-1.5 hover:bg-amber-200 hover:cursor-pointer">Browse Products</button>
             </li>
             <li class="bg-amber-100 w-[1px] h-8"></li>
             <li>
-                <button type="button" id = "category-view-btn" class="nav-button bg-amber-100 font-semibold rounded-sm px-4 py-1.5 hover:bg-amber-200 hover:cursor-pointer">Shop by Category</button>
+                <button type="button" id = "category-view-btn" data-view="category" class="nav-button bg-amber-100 font-semibold rounded-sm px-4 py-1.5 hover:bg-amber-200 hover:cursor-pointer">Shop by Category</button>
             </li>
             <li class="bg-amber-100 w-[1px] h-8"></li>
             <li>
-                <button type="button" id = "about-view-btn" class="nav-button bg-amber-100 font-semibold rounded-sm px-4 py-1.5 hover:bg-amber-200 hover:cursor-pointer">About</button>
+                <button type="button" id = "about-view-btn" class="about-button nav-button bg-amber-100 font-semibold rounded-sm px-4 py-1.5 hover:bg-amber-200 hover:cursor-pointer">About</button>
             </li>
         </ul>
     </nav>
 
     <!--CART-->
     <div id = "nav-cart-container" class="flex gap-2 text-amber-900 bg-amber-100 font-semibold rounded-sm px-4 py-2 hover:bg-amber-200 hover:cursor-pointer">
-        <button type="button" id = "cart-view-btn" href="#" class="items-center flex gap-2 hover:cursor-pointer">
+        <button type="button" id = "cart-view-btn" href="#" data-view="cart" class="items-center flex gap-2 hover:cursor-pointer">
             <span class="items-center">Cart</span>
             <span id="cart-btn" class="bg-amber-900 text-white px-2 py-0.5 rounded-sm">0</span>
         </button>
@@ -101,9 +101,9 @@
                     <span class="filter-text pb-0.5">Reset Filters</span>
                 </button>
             </div>
-            <div id="brand-accordion">
+            <div id="brand-accordion" class="filter-accordion">
                 <button id="brands-filter-dropdown" class="flex w-full items-center justify-between hover:cursor-pointer">
-                    <h2 class="font-semibold text-lg">Brand</h2>
+                    <span class="font-semibold text-lg">Brand</span>
                     <img src="assets/arrow_drop_down.svg" alt="brands drop down hide button" class="rotate-90 duration-200"/>
                 </button>
                 <!--Button needs to drop down the list. BELOW IS FOR TESTING. COMMENT OUT AND LEAVE AS EXAMPLE -->
@@ -118,9 +118,9 @@
                     </li> -->
                 </ul> 
             </div>
-            <div id="category-accordion">
+            <div id="category-accordion" class="filter-accordion">
                 <button id="category-filter-dropdown" class="flex w-full items-center justify-between hover:cursor-pointer">
-                    <h2 class="font-semibold text-lg">Categories</h2>
+                    <span class="font-semibold text-lg">Categories</span>
                     <img src="assets/arrow_drop_down.svg" alt="category drop down hide button" class="rotate-90 duration-200"/>
                 </button>
                 <ul id="category-dropdown-list" class="hidden transition-all ease-out">
@@ -132,9 +132,9 @@
                     </li> -->
                 </ul>
             </div>
-            <div id="tags-accordion">
+            <div id="tags-accordion" class="filter-accordion">
                 <button id="tags-filter-dropdown" class="flex w-full items-center justify-between hover:cursor-pointer">
-                    <h2 class="font-semibold text-lg">Tags</h2>
+                    <span class="font-semibold text-lg">Tags</span>
                     <img src="assets/arrow_drop_down.svg" alt="tags drop down hide button" class="rotate-90 duration-200"/>
                 </button>
                 <ul id="tags-dropdown-list" class="hidden transition-all ease-out">
@@ -146,9 +146,9 @@
                     </li> -->
                 </ul>
             </div>
-            <div id="price-accordion">
+            <div id="price-accordion" class="filter-accordion">
                 <button id="price-filter-dropdown" class="flex w-full items-center justify-between hover:cursor-pointer">
-                    <h2 class="font-semibold text-lg">Price</h2>
+                    <span class="font-semibold text-lg">Price</span>
                     <img src="assets/arrow_drop_down.svg" alt="price drop down hide button" class="rotate-90 duration-200"/>
                 </button>
                 <ul id="price-dropdown-list" class="hidden transition-all ease-out">
@@ -160,9 +160,9 @@
                     </li> -->
                 </ul>
             </div>
-            <div id="rating-accordion">
+            <div id="rating-accordion" class="filter-accordion">
                 <button id="rating-filter-dropdown" class="flex w-full items-center justify-between hover:cursor-pointer">
-                    <h2 class="font-semibold text-lg">Rating</h2>
+                    <span class="font-semibold text-lg">Rating</span>
                     <img src="assets/arrow_drop_down.svg" alt="rating drop down hide button" class="rotate-90 duration-200"/>
                 </button>
                 <ul id="rating-dropdown-list" class="hidden transition-all ease-out">
@@ -192,8 +192,8 @@
             <section id="selected-filters" class="flex justify-start items-center gap-4 mt-4">
                 <h2 class="text-lg font-semibold">Selected Filters:</h2>
                 <ul class="flex gap-4">
-                    <!-- This is the template we will use for generating these with JS
-                    <li>
+                     <!--This is the template we will use for generating these with JS-->
+                    <!-- <li>
                         CREDIT
                         The button will only show the X in the <img> tag when hovering. "hidden group-hover:block" applied to <img> and "group" applied to <button> are from this Stackoverflow answer
                             https://stackoverflow.com/a/67401616
@@ -367,32 +367,35 @@
     <!---ABOUT VIEW--->
         <dialog class = "about-dialog m-auto w-96 max-w-full rounded-md bg-white p-6"> <!--https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog-->
             <header class = "mb-5 flex items-center justify-between">
-                <button class = "about-close rounded-sm bg-amber-100 py-1 hover:bg-amber-200">close</button>
+                <button class = "about-close rounded-sm bg-amber-100 p-1 hover:bg-amber-200 hover:cursor-pointer">
+                    <!--<img src="assets/x_button.svg" class="w-4 h-4"/>-->
+                    Close
+                </button>
                 <h2 class = "text-2xl font-semibold text-amber-900"><strong>About Us</strong></h2>
             </header>
             <section class = "mb-5">
                 <h3 class = "mb-2 flex items-center gap-2 font-semibold text-amber-900">
                     Our Assignment
-                    <img src = "./assets/school.svg" alt = "school-logo">
+                    <img src = "./assets/school.svg" alt = "school-logo" class="w-8 h-8">
                 </h3>
                 <p>This product store was created for COMP 3612 Assignment 2 at Mount Royal University</p>
             </section>
             <section class = "mb-5">
                 <h3 class = "mb-2 flex items-center gap-2 font-semibold text-amber-900">
                     The Store
-                    <img src = "./assets/assignment.svg" alt = "book-logo">
+                    <img src = "./assets/assignment.svg" alt = "book-logo" class="w-8 h-8">
                 </h3>
                 <p>Our store uses HTML for its structure, Tailwind for CSS for the decor and Javascript for electricity, plumbing and utilities.</p>
             </section>
             <section class = "mb-5">
                 <h3 class = "mb-2 flex items-center gap-2 font-semibold text-amber-900">
                     Our Team
-                    <img src = "./assets/group.svg" alt = "group-logo">
+                    <img src = "./assets/group.svg" alt = "group-logo" class="w-8 h-8">
                 </h3>
                 <p>Ty Wagner and Parth Satikumar</p>
             </section>
             <footer class = "about-footer border-t border-amber-200 pt-4">
-                <a href = "https://github.com/psatikumar1/COMP_3612_A2">
+                <a href = "https://github.com/psatikumar1/COMP_3612_A2" class="hover:underline">
                     View our GitHub Repository
                 </a>
             </footer>
@@ -404,7 +407,7 @@
         <h2 class="text-[15px] font-semibold">Company</h2>
         <ul class="mt-2 mb-4">
             <li class="mb-2">
-                <button type = "button" class = about-footer-button hover:underline">
+                <button type = "button" id="about-footer-btn" class="about-button hover:underline hover:cursor-pointer">
                     About us
                 </button>
             </li>
