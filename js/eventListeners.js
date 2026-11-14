@@ -18,18 +18,22 @@ export function setHeaderEventListeners() {
 //---For helping to swtich between page views---
 //
 function showHome(){
+    document.title = "COMP3612 Store";
     showView("#home");
 }
 
 function showBrowse(){
+    document.title = "COMP3612 - Browse";
     showView("#browse");
 }
 
 function showCategory(){
+    document.title = "COMP3612 - Shop by Category";
     showView("#category");
 }
 
 function showCart(){
+    document.title = "COMP3612 - Shopping Cart";
     showView("#cart");
 }
 
