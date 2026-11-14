@@ -2,19 +2,18 @@
 <html lang = "en">
 <head>
     <meta charset = "utf-8"/>
-    <script type = "module" src = "./site.js"></script>
-    <script src = "./helpers.js"></script>
+    <script type = "module" src = "./js/site.js"></script>
     <link href="./src/output.css" rel="stylesheet">
-    <title>A2 Store</title>
+    <title>COMP3612 Store</title>
 </head>
 <body class="flex min-h-screen flex-col text-sm">
 
 <header class="flex items-center justify-between bg-amber-800 py-5 px-40">
     <!--LOGO-->
-    <div class="flex items-center">
+    <div class="items-center">
         <!--This will have to have some JS behind it to hide the current view and load the HOME view-->
         <button type="button" id = "logo-btn" class="hover:cursor-pointer"> 
-            <img/>LOGO
+            <img src="assets/comp3612_logo.webp" class="overflow-none h-15 min-w-full" />
         </button>
     </div>
     <!--Nav to views-->
@@ -25,11 +24,11 @@
             </li>
             <li class="bg-amber-100 w-[1px] h-8"></li>
             <li>
-                <button type="button" id = "browse-view-btn" class="nav-button bg-amber-100 font-semibold rounded-sm px-4 py-1.5 hover:bg-amber-200 hover:cursor-pointer">Browse</button>
+                <button type="button" id = "browse-view-btn" class="nav-button bg-amber-100 font-semibold rounded-sm px-4 py-1.5 hover:bg-amber-200 hover:cursor-pointer">Browse Products</button>
             </li>
             <li class="bg-amber-100 w-[1px] h-8"></li>
             <li>
-                <button type="button" id = "category-view-btn" class="nav-button bg-amber-100 font-semibold rounded-sm px-4 py-1.5 hover:bg-amber-200 hover:cursor-pointer">Category</button>
+                <button type="button" id = "category-view-btn" class="nav-button bg-amber-100 font-semibold rounded-sm px-4 py-1.5 hover:bg-amber-200 hover:cursor-pointer">Shop by Category</button>
             </li>
             <li class="bg-amber-100 w-[1px] h-8"></li>
             <li>
@@ -42,7 +41,7 @@
     <div id = "nav-cart-container" class="flex gap-2 text-amber-900 bg-amber-100 font-semibold rounded-sm px-4 py-2 hover:bg-amber-200 hover:cursor-pointer">
         <button type="button" id = "cart-view-btn" href="#" class="items-center flex gap-2 hover:cursor-pointer">
             <span class="items-center">Cart</span>
-            <span id="cart-count" class="bg-amber-900 text-white px-2 py-0.5 rounded-sm">0</span>
+            <span id="cart-btn" class="bg-amber-900 text-white px-2 py-0.5 rounded-sm">0</span>
         </button>
     </div>
 </header>
@@ -54,66 +53,37 @@
     <!---HOME VIEW--->
     <article id = "home" class="page-view w-full">
         <!--HERO-->
-        <div>
+        <div id="hero">
             <!--Image taken and edited by Ty W. MRU Logo from www.mtroyal.ca-->
-            <img src="assets/comp3612_hero.webp" class="w-full h-80 object-cover">
+            <img src="assets/comp3612_hero.webp" class="w-full h-90 object-cover">
         </div>
-        <!--Want the images to take up full width. Use multiple images from the given data
-        to act as the hero. Maybe we change this? Was just the first idea-->
-        <!--Had one thought to place one image and write a function to change the image every few seconds.
-        Automatic carousel? Not sure if that is the right term.-->
-        <!-- <section id = "hero-container" class="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
-            <div id = "hero-img-1" class="aspect-square bg-gray-300">
-                <img src="" alt="" class="h-full w-full object-cover"/>
-            </div>
-            <div id = "hero-img-2" class="aspect-square bg-gray-300">
-                <img src="" alt="" class="h-full w-full object-cover"/>
-            </div>
-            <div id = "hero-img-3" class="aspect-square bg-gray-300">
-                <img src="" alt="" class="h-full w-full object-cover"/>
-            </div>
-            <div id = "hero-img-4" class="aspect-square bg-gray-300">
-                <img src="" alt="" class="h-full w-full object-cover"/>
-            </div>
-            <div id = "hero-img-5" class="aspect-square bg-gray-300">
-                <img src="" alt="" class="h-full w-full object-cover"/>
-            </div>
-            <div id = "hero-img-6" class="aspect-square bg-gray-300">
-                <img src="" alt="" class="h-full w-full object-cover"/>
-            </div>
-        </section> -->
+
         <!--NEW BRANDS -- Maybe add this? Just for more content on the HOME view-->
         <!--FEATURED PRODUCTS-->
-        <section id = "featured-products" class="my-5">
+        <section id = "featured-products" class="flex-1 my-5">
             <h2 class="text-3xl font-semibold mb-5">Featured</h2>
-            <div id = "product-cards" class="grid justify-center gap-6 max-w-6xl mx-auto grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(16rem,20rem))]">
-                <div id = "product-1" class="card flexbox justify-center items-center rounded-md border-1 transition-shadow hover:shadow-md hover:shadow-black overflow:hidden">
-                    <div id = "card-img1" class="card-img p-15 min-h-80">
-                        <img src="" alt=""/>
+            <!--Using flex here rather than grid because the idea would be for featured products to change. Grid doesn't do this as easily. Solved it faster when I tried changing to flex to see what would happen-->
+            <div id = "product-cards" class="flex flex-wrap justify-center gap-6">
+                <div class="product-card w-56 h-max flex flex-col items-center hover:scale-103 duration-200">
+                    <div class="product-card-button w-full">
+                        <div class="product-card-img bg-stone-200 hover:cursor-pointer aspect-square">
+                            <img src="https://cdn.dummyjson.com/product-images/beauty/eyeshadow-palette-with-mirror/thumbnail.webp" class="w-full">
+                        </div>
+                        <div class="product-info text-left grid gap-1 mt-2">
+                            <a href="#" class="hover:cursor-pointer hover:underline text-[16px] grid gap-1">
+                                <h2 class="product-card-brand font-semibold">Calvin Klein</h2>
+                                <h3 class="product-card-name">Eyeshadow Palette with Mirror</h3>
+                            </a>
+                            <div class="product-card-price flex flex-wrap gap-2">
+                                <p class="original-product-price strikethrough"><s>$19.99</s></p>
+                                <p class="discounted-product-price text-red-800">$16.35</p>
+                                <p class="percent-discount text-red-800">(18.19% off)</p>
+                            </div>
+                        </div>
                     </div>
-                    <div id = "card-info1" class="card-info p-7 bg-amber-100 rounded-b-md">
-                        <p class="card-title text-lg font-semibold">Title Product</p>
-                        <p class="card-price text-stone-800 text-lg">$119.99</p>
-                        <!--Could not align only the anchor to the center. Suggestion was from StackOverflow
-                        https://stackoverflow.com/questions/73444022/tailwind-align-anchor-tag-to-center-of-screen-->
-                        <p class="text-center mt-4 font-semibold">
-                            <a class="product-link border-1 border-black px-18 py-1.5 rounded-sm hover:bg-amber-200" href="#">View Details</a>
-                        </p>
-                    </div>
-                </div>
-                <div id = "product-2" class="card flexbox justify-center items-center rounded-md border-1 transition-shadow hover:shadow-md hover:shadow-black overflow:hidden">
-                    <div id = "card-img1" class="card-img p-15 min-h-80">
-                        <img src="" alt=""/>
-                    </div>
-                    <div id = "card-info2" class="card-info p-7 bg-amber-100 rounded-b-md">
-                        <p class="card-title text-lg font-semibold">Title Product</p>
-                        <p class="card-price text-stone-800 text-lg">$119.99</p>
-                        <!--Could not align only the anchor to the center. Suggestion was from StackOverflow
-                        https://stackoverflow.com/questions/73444022/tailwind-align-anchor-tag-to-center-of-screen-->
-                        <p class="text-center mt-4 font-semibold">
-                            <a class="product-link border-1 border-black px-18 py-1.5 rounded-sm hover:bg-amber-200" href="#">View Details</a>
-                        </p>
-                    </div>
+                    <button class="add-to-cart-btn my-1.5 bg-stone-800 rounded-md w-full text-white text-[16px] font-semibold py-1.5 hover:cursor-pointer hover:bg-stone-700">
+                        Add to Cart
+                    </button>
                 </div>
             </div>
         </section>
@@ -121,57 +91,149 @@
     </article>
 
     <!---BROWSE VIEW--->
-    <article id = "browse" class="view flex flex-row my-4 w-full justify-start w-full hidden">
-        <section id="filter" class="flex flex-col gap-4 px-5 py-2 bg-gray-300 w-[20%]">
-            <h2 class="text-amber-900 font-semibold text-xl">Filters</h2>
+    <article id = "browse" class="page-view flex flex-row my-4 w-full justify-start w-full hidden">
+        <section id="filter" class="flex flex-col gap-4 px-5 py-2 bg-stone-100 min-w-60 h-max">
+            <div class="flex justify-between items-center">
+                <h2 class="text-amber-900 font-semibold text-xl">Filters</h2>
+                <!--THIS IS HIDDEN UNTIL A FILTER IS SELECTED-->
+                <button id="reset-filters" class="remove-filter-button flex items-center gap-1 border border-stone-300 p-1 hover:bg-stone-300 hidden">
+                    <img src="assets/x_button.svg" class="w-4 h-4">
+                    <span class="filter-text pb-0.5">Reset Filters</span>
+                </button>
+            </div>
             <div id="brand-accordion">
                 <button id="brands-filter-dropdown" class="flex w-full items-center justify-between hover:cursor-pointer">
                     <h2 class="font-semibold text-lg">Brand</h2>
-                    <img src="assets/arrow_drop_down.svg" alt="brands drop down hide button" class=""/>
-                </button> 
+                    <img src="assets/arrow_drop_down.svg" alt="brands drop down hide button" class="rotate-90 duration-200"/>
+                </button>
+                <!--Button needs to drop down the list. BELOW IS FOR TESTING. COMMENT OUT AND LEAVE AS EXAMPLE -->
+                <ul id="brands-dropdown-list" class="hidden transition-all ease-out">
+                    <!--THIS IS AN EXAMPLE TO FOLLOW WHEN CREATING THE LIST ITEMS IN JAVASCRIPT. Must programmatically
+                    create these <li> tags based on the data provided -->
+                    <!-- <li class="ml-2">
+                        <label class="flex hover:cursor-pointer">
+                            <input type="checkbox"/>
+                            <span class="pl-2 text-[16px]">Essence</span>
+                        </label>
+                    </li> -->
+                </ul> 
             </div>
             <div id="category-accordion">
                 <button id="category-filter-dropdown" class="flex w-full items-center justify-between hover:cursor-pointer">
                     <h2 class="font-semibold text-lg">Categories</h2>
-                    <img src="assets/arrow_drop_down.svg" alt="category drop down hide button" class=""/>
+                    <img src="assets/arrow_drop_down.svg" alt="category drop down hide button" class="rotate-90 duration-200"/>
                 </button>
+                <ul id="category-dropdown-list" class="hidden transition-all ease-out">
+                    <!-- <li class="ml-2">
+                        <label class="flex hover:cursor-pointer">
+                            <input type="checkbox"/>
+                            <span class="pl-2 text-[16px]">Essence</span>
+                        </label>
+                    </li> -->
+                </ul>
             </div>
             <div id="tags-accordion">
                 <button id="tags-filter-dropdown" class="flex w-full items-center justify-between hover:cursor-pointer">
                     <h2 class="font-semibold text-lg">Tags</h2>
-                    <img src="assets/arrow_drop_down.svg" alt="tags drop down hide button" class=""/>
+                    <img src="assets/arrow_drop_down.svg" alt="tags drop down hide button" class="rotate-90 duration-200"/>
                 </button>
+                <ul id="tags-dropdown-list" class="hidden transition-all ease-out">
+                    <!-- <li class="ml-2">
+                        <label class="flex hover:cursor-pointer">
+                            <input type="checkbox"/>
+                            <span class="pl-2 text-[16px]">Essence</span>
+                        </label>
+                    </li> -->
+                </ul>
             </div>
             <div id="price-accordion">
                 <button id="price-filter-dropdown" class="flex w-full items-center justify-between hover:cursor-pointer">
                     <h2 class="font-semibold text-lg">Price</h2>
-                    <img src="assets/arrow_drop_down.svg" alt="price drop down hide button" class=""/>
+                    <img src="assets/arrow_drop_down.svg" alt="price drop down hide button" class="rotate-90 duration-200"/>
                 </button>
+                <ul id="price-dropdown-list" class="hidden transition-all ease-out">
+                    <!-- <li class="ml-2">
+                        <label class="flex hover:cursor-pointer">
+                            <input type="checkbox"/>
+                            <span class="pl-2 text-[16px]">Essence</span>
+                        </label>
+                    </li> -->
+                </ul>
             </div>
             <div id="rating-accordion">
                 <button id="rating-filter-dropdown" class="flex w-full items-center justify-between hover:cursor-pointer">
                     <h2 class="font-semibold text-lg">Rating</h2>
-                    <img src="assets/arrow_drop_down.svg" alt="rating drop down hide button" class=""/>
+                    <img src="assets/arrow_drop_down.svg" alt="rating drop down hide button" class="rotate-90 duration-200"/>
                 </button>
+                <ul id="rating-dropdown-list" class="hidden transition-all ease-out">
+                    <!-- <li class="ml-2">
+                        <label class="flex hover:cursor-pointer">
+                            <input type="checkbox"/>
+                            <span class="pl-2 text-[16px]">Essence</span>
+                        </label>
+                    </li> -->
+                </ul>
             </div>
 
         </section>
-        <section id="result" class="bg-gray-300 px-5 py-2">
-            <section id="selected-filters">
-
+        <section id="result" class="flex-1 ml-2 bg-stone-100 px-5 py-2 w-full">
+            <div class="flex items-center gap-4">
+                <div id="sort-order-container" class="border border-stone-300 rounded-sm p-2">
+                    <!--Use a "change" listener for the entire select-->
+                    <select id="sort-order-dropdown" class="text-stone-600 hover:cursor-pointer">
+                        <option value="P-Name_AZ" selected>Product Name (A-Z)</option>
+                        <option value="P-Name_ZA">Product Name (Z-A)</option>
+                        <option value="Price_LH">Price (Low to High)</option>
+                        <option value="Price_HL">Price (High to Low)</option>
+                        <option value="Category">Category</option>
+                    </select>
+                </div>
+            </div>
+            <section id="selected-filters" class="flex justify-start items-center gap-4 mt-4">
+                <h2 class="text-lg font-semibold">Selected Filters:</h2>
+                <ul class="flex gap-4">
+                    <!-- This is the template we will use for generating these with JS
+                    <li>
+                        CREDIT
+                        The button will only show the X in the <img> tag when hovering. "hidden group-hover:block" applied to <img> and "group" applied to <button> are from this Stackoverflow answer
+                            https://stackoverflow.com/a/67401616
+                        <button class="remove-filter-button group flex items-center gap-1 border border-stone-300 p-1 hover:bg-stone-300">
+                            <img src="assets/x_button.svg" class="w-4 h-4 hidden group-hover:block">
+                            <span class="filter-text pb-0.5">Essence</span>
+                        </button>
+                    </li> -->
+                </ul>
             </section>
-            <section id="search-results">
-
+            <section id="search-results" class="my-4 grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- <div class="product-card w-full h-max flex flex-col items-center">
+                    <div class="product-card-button w-full">
+                        <div class="product-card-img bg-stone-200 hover:cursor-pointer aspect-square">
+                            <img src="https://cdn.dummyjson.com/product-images/fragrances/calvin-klein-ck-one/thumbnail.webp" class="w-full">
+                        </div>
+                        <div class="product-info text-left grid gap-1 mt-2">
+                            <a href="#" class="hover:cursor-pointer hover:underline text-[16px] grid gap-1">
+                                <h2 class="product-card-brand font-semibold">Calvin Klein</h2>
+                                <h3 class="product-card-name">Calvin Klein CK One</h3>
+                            </a>
+                            <div class="product-card-price flex flex-wrap gap-2">
+                                <p class="original-product-price strikethrough"><s>$49.99</s></p>
+                                <p class="discounted-product-price text-red-800">$49.05</p>
+                                <p class="percent-discount text-red-800">(1.89% off)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="add-to-cart-btn my-1.5 bg-stone-800 rounded-md w-full text-white text-[16px] font-semibold py-1.5 hover:cursor-pointer hover:bg-stone-700">
+                        Add to Cart
+                    </button>
+                </div> -->
             </section>
         </section>
     </article>
 
     <!--CATEGORY VIEW-->
-    <article id = "category" class="view w-full">
-
+    <article id = "category" class="page-view w-full hidden">
         <section id="category-hero" class="w-full flex flex-col items-center">
-            <img src="https://cdn.dummyjson.com/product-images/furniture/bedside-table-african-cherry/thumbnail.webp" alt="category-hero-img">
-            <h2>EXAMPLE HERO IMAGE WE WILL CHANGE THIS</h2>
+            <img src="assets/comp3612_hero.webp" alt="category-hero-img" class="h-90 w-full object-cover">
         </section>
 
         <h2 class="text-center my-10 text-2xl font-semibold text-amber-900">Shop by Category</h2>
@@ -236,7 +298,7 @@
                 <tr class=" group border-b border-stone-200">
                 <td class="py-4 pr-4">
                     <div class="flex items-center gap-4">
-                        <button type="button" class="text-sm text-amber-900 underline">
+                        <button type="button" class="text-sm text-amber-900 underline hover:cursor-pointer">
                             Remove
                         </button>
 
@@ -296,25 +358,55 @@
                 <p class = "mb-3 flex justify-between"><strong>Total</strong></p>
             </section>
             <button type = "button" class = "checkout-button mt-4 w-30 rounded-sm bg-sky-800
-                py-2 font-semibold text-white hover:bg-sky-600">
+                py-2 font-semibold text-white hover:bg-sky-600 hover:cursor-pointer">
                 Checkout</button>
         <section>
     </article>
 
 
     <!---ABOUT VIEW--->
-    <article id = "about" class="view w-full hidden">
-        <h2>ABOUT VIEW</h2>
-        <div>PLACEHOLDER FOR JS VIEW SWITCHING TESTING</div>
-    </article>
+        <dialog class = "about-dialog m-auto w-96 max-w-full rounded-md bg-white p-6"> <!--https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog-->
+            <header class = "mb-5 flex items-center justify-between">
+                <button class = "about-close rounded-sm bg-amber-100 py-1 hover:bg-amber-200">close</button>
+                <h2 class = "text-2xl font-semibold text-amber-900"><strong>About Us</strong></h2>
+            </header>
+            <section class = "mb-5">
+                <h3 class = "mb-2 flex items-center gap-2 font-semibold text-amber-900">
+                    Our Assignment
+                    <img src = "./assets/school.svg" alt = "school-logo">
+                </h3>
+                <p>This product store was created for COMP 3612 Assignment 2 at Mount Royal University</p>
+            </section>
+            <section class = "mb-5">
+                <h3 class = "mb-2 flex items-center gap-2 font-semibold text-amber-900">
+                    The Store
+                    <img src = "./assets/assignment.svg" alt = "book-logo">
+                </h3>
+                <p>Our store uses HTML for its structure, Tailwind for CSS for the decor and Javascript for electricity, plumbing and utilities.</p>
+            </section>
+            <section class = "mb-5">
+                <h3 class = "mb-2 flex items-center gap-2 font-semibold text-amber-900">
+                    Our Team
+                    <img src = "./assets/group.svg" alt = "group-logo">
+                </h3>
+                <p>Ty Wagner and Parth Satikumar</p>
+            </section>
+            <footer class = "about-footer border-t border-amber-200 pt-4">
+                <a href = "https://github.com/psatikumar1/COMP_3612_A2">
+                    View our GitHub Repository
+                </a>
+            </footer>
+        </dialog>
 </main>
 
-<footer class="px-40 bg-amber-800 p-5 text-gray-200">
+<footer class="px-40 bg-amber-800 p-5 text-gray-200 items-bottom">
     <nav>
         <h2 class="text-[15px] font-semibold">Company</h2>
         <ul class="mt-2 mb-4">
             <li class="mb-2">
-                <a href="#" class="hover:underline">About Us</a>
+                <button type = "button" class = about-footer-button hover:underline">
+                    About us
+                </button>
             </li>
             <li class="mb-2">
                 <a href="https://github.com/psatikumar1/COMP_3612_A2" target="_blank" class="hover:underline">GitHub</a>
