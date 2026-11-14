@@ -351,23 +351,36 @@
 
     <!---ABOUT VIEW--->
         <dialog class = "about-dialog m-auto w-96 max-w-full rounded-md bg-white p-6"> <!--https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog-->
-            <button class = "about-close">Close</button>
-            <h2>About Us</h2>
-            <section>
-                <h3>Our Assignment</h3>
+            <header class = "mb-5 flex items-center justify-between">
+                <button class = "about-close rounded-sm bg-amber-100 py-1 hover:bg-amber-200">close</button>
+                <h2 class = "text-2xl font-semibold text-amber-900"><strong>About Us</strong></h2>
+            </header>
+            <section class = "mb-5">
+                <h3 class = "mb-2 flex items-center gap-2 font-semibold text-amber-900">
+                    Our Assignment
+                    <img src = "./assets/school.svg" alt = "school-logo" class = "">
+                </h3>
                 <p>This product store was created for COMP 3612 Assignment 2 at Mount Royal University</p>
             </section>
-            <section>
-                <h3>The House</h3>
-                <p>Our store uses HTML for frame, Tailwind for CSS for the decor and Javascript for electricity, plumbing and utilities.</p>
+            <section class = "mb-5">
+                <h3 class = "mb-2 flex items-center gap-2 font-semibold text-amber-900">
+                    The Store
+                    <img src = "./assets/assignment.svg" alt = "book-logo" class = "h-auto w-auto">
+                </h3>
+                <p>Our store uses HTML for its structure, Tailwind for CSS for the decor and Javascript for electricity, plumbing and utilities.</p>
             </section>
-            <section>
-                <h3>Our Team</h3>
-                <p>Ty Wagner and Parth Satiumar</p>
+            <section class = "mb-5">
+                <h3 class = "mb-2 flex items-center gap-2 font-semibold text-amber-900">
+                    Our Team
+                    <img src = "./assets/group.svg" alt = "group-logo" class = "">
+                </h3>
+                <p>Ty Wagner and Parth Satikumar</p>
             </section>
-            <a href = "https://github.com/psatikumar1/COMP_3612_A2">
-                View our GitHub Repository
-            </a>
+            <footer class = "about-footer border-t border-amber-200 pt-4">
+                <a href = "https://github.com/psatikumar1/COMP_3612_A2">
+                    View our GitHub Repository
+                </a>
+            </footer>
         </dialog>
 </main>
 
