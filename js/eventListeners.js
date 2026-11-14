@@ -17,23 +17,19 @@ export function setHeaderEventListeners() {
 //
 //---For helping to swtich between page views---
 //
-function showHome(){
-    document.title = "COMP3612 Store";
+export function showHome(){
     showView("#home");
 }
 
-function showBrowse(){
-    document.title = "COMP3612 - Browse";
+export function showBrowse(){
     showView("#browse");
 }
 
-function showCategory(){
-    document.title = "COMP3612 - Shop by Category";
+export function showCategory(){
     showView("#category");
 }
 
-function showCart(){
-    document.title = "COMP3612 - Shopping Cart";
+export function showCart(){
     showView("#cart");
 }
 
@@ -110,3 +106,17 @@ function toggleDropdown(dropdownMenu, dropdownIcon) {
         dropdownMenu.classList.remove("hidden");
     }
 }
+
+//
+//---For toggling the About popup---
+//
+export function openAbout(){
+    const aboutDialog = document.querySelector(".about-dialog") //https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/showModal
+    aboutDialog.showModal();
+}
+
+export function closeAbout(){
+    const aboutDialog = document.querySelector(".about-dialog")
+    aboutDialog.close();
+}
+
