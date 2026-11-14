@@ -4,7 +4,7 @@
     <meta charset = "utf-8"/>
     <script type = "module" src = "./js/site.js"></script>
     <link href="./src/output.css" rel="stylesheet">
-    <title>A2 Store</title>
+    <title>COMP3612 Store</title>
 </head>
 <body class="flex min-h-screen flex-col text-sm">
 
@@ -13,7 +13,7 @@
     <div class="flex items-center">
         <!--This will have to have some JS behind it to hide the current view and load the HOME view-->
         <button type="button" id = "logo-btn" class="hover:cursor-pointer"> 
-            <img/>LOGO
+            <img src="assets/comp3612_logo.webp" class="overflow-none h-15 w-full" />
         </button>
     </div>
     <!--Nav to views-->
@@ -24,11 +24,11 @@
             </li>
             <li class="bg-amber-100 w-[1px] h-8"></li>
             <li>
-                <button type="button" id = "browse-view-btn" class="nav-button bg-amber-100 font-semibold rounded-sm px-4 py-1.5 hover:bg-amber-200 hover:cursor-pointer">Browse</button>
+                <button type="button" id = "browse-view-btn" class="nav-button bg-amber-100 font-semibold rounded-sm px-4 py-1.5 hover:bg-amber-200 hover:cursor-pointer">Browse Products</button>
             </li>
             <li class="bg-amber-100 w-[1px] h-8"></li>
             <li>
-                <button type="button" id = "category-view-btn" class="nav-button bg-amber-100 font-semibold rounded-sm px-4 py-1.5 hover:bg-amber-200 hover:cursor-pointer">Category</button>
+                <button type="button" id = "category-view-btn" class="nav-button bg-amber-100 font-semibold rounded-sm px-4 py-1.5 hover:bg-amber-200 hover:cursor-pointer">Shop by Category</button>
             </li>
             <li class="bg-amber-100 w-[1px] h-8"></li>
             <li>
@@ -55,7 +55,7 @@
         <!--HERO-->
         <div id="hero">
             <!--Image taken and edited by Ty W. MRU Logo from www.mtroyal.ca-->
-            <img src="assets/comp3612_hero.webp" class="w-full h-80 object-cover">
+            <img src="assets/comp3612_hero.webp" class="w-full h-90 object-cover">
         </div>
 
         <!--NEW BRANDS -- Maybe add this? Just for more content on the HOME view-->
@@ -232,10 +232,8 @@
 
     <!--CATEGORY VIEW-->
     <article id = "category" class="page-view w-full hidden">
-
         <section id="category-hero" class="w-full flex flex-col items-center">
-            <img src="https://cdn.dummyjson.com/product-images/furniture/bedside-table-african-cherry/thumbnail.webp" alt="category-hero-img">
-            <h2>EXAMPLE HERO IMAGE WE WILL CHANGE THIS</h2>
+            <img src="assets/comp3612_hero.webp" alt="category-hero-img" class="h-90 w-full object-cover">
         </section>
 
         <h2 class="text-center my-10 text-2xl font-semibold text-amber-900">Shop by Category</h2>
