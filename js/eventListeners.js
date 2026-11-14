@@ -74,3 +74,17 @@ function toggleDropdown(dropdownMenu, dropdownIcon) {
         dropdownMenu.classList.remove("hidden");
     }
 }
+
+//
+//---For toggling the About popup---
+//
+export function openAbout(){
+    const aboutDialog = document.querySelector(".about-dialog") //https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/showModal
+    aboutDialog.showModal();
+}
+
+export function closeAbout(){
+    const aboutDialog = document.querySelector(".about-dialog")
+    aboutDialog.close();
+}
+

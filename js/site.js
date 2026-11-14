@@ -16,16 +16,23 @@ function setHeaderEventListeners() {
     const browseButton = document.querySelector("#browse-view-btn");
     const categoryButton = document.querySelector("#category-view-btn");
     const cartButton = document.querySelector("#cart-view-btn");
+    const aboutButton = document.querySelector("#about-view-btn");
+    const closeAboutButton = document.querySelector(".about-close");
+    const footerAboutButton = document.querySelector(".about-footer-button");
 
     homeButton.addEventListener("click", EventListeners.showHome);
     logoButton.addEventListener("click", EventListeners.showHome);
     browseButton.addEventListener("click", EventListeners.showBrowse);
     categoryButton.addEventListener("click", EventListeners.showCategory);
     cartButton.addEventListener("click", EventListeners.showCart);
+    aboutButton.addEventListener("click", EventListeners.openAbout);
+    closeAboutButton.addEventListener("click", EventListeners.closeAbout);
+    footerAboutButton.addEventListener("click", EventListeners.openAbout);
+
 }
 
 /**
- * Sets the event listeneres for the filter accordions on the Browse view.
+ * Sets the event listeners for the filter according on the Browse view.
  */
 function setBrowseFilterEventListeners() {
     const brandDropdownBtn = document.querySelector("#brands-filter-dropdown");

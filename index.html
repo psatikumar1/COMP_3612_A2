@@ -350,10 +350,25 @@
 
 
     <!---ABOUT VIEW--->
-    <article id = "about" class="page-view w-full hidden">
-        <h2>ABOUT VIEW</h2>
-        <div>PLACEHOLDER FOR JS VIEW SWITCHING TESTING</div>
-    </article>
+        <dialog class = "about-dialog m-auto w-96 max-w-full rounded-md bg-white p-6"> <!--https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog-->
+            <button class = "about-close">Close</button>
+            <h2>About Us</h2>
+            <section>
+                <h3>Our Assignment</h3>
+                <p>This product store was created for COMP 3612 Assignment 2 at Mount Royal University</p>
+            </section>
+            <section>
+                <h3>The House</h3>
+                <p>Our store uses HTML for frame, Tailwind for CSS for the decor and Javascript for electricity, plumbing and utilities.</p>
+            </section>
+            <section>
+                <h3>Our Team</h3>
+                <p>Ty Wagner and Parth Satiumar</p>
+            </section>
+            <a href = "https://github.com/psatikumar1/COMP_3612_A2">
+                View our GitHub Repository
+            </a>
+        </dialog>
 </main>
 
 <footer class="px-40 bg-amber-800 p-5 text-gray-200">
@@ -361,7 +376,9 @@
         <h2 class="text-[15px] font-semibold">Company</h2>
         <ul class="mt-2 mb-4">
             <li class="mb-2">
-                <a href="#" class="hover:underline">About Us</a>
+                <button type = "button" class = about-footer-button hover:underline">
+                    About us
+                </button>
             </li>
             <li class="mb-2">
                 <a href="https://github.com/psatikumar1/COMP_3612_A2" target="_blank" class="hover:underline">GitHub</a>
