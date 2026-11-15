@@ -1,17 +1,28 @@
 import { Accordion } from "./accordion.js";
 import { ViewManager } from "./viewManager.js";
 import { fetchData } from "./dataFetcher.js";
+import { fetchProduct } from "./dataFetcher.js";
+
+
+/**
+ * Moved this to flobal so that it can also be accessed by openHomeProduct()
+ */
+const views = new ViewManager({
+    home: { id: "#home", title: "COMP3612 Store" },
+    browse: { id: "#browse", title: "COMP3612 - Browse Products" },
+    category: { id: "#category", title: "COMP3612 - Shop by Category" },
+    cart: { id: "#cart", title: "COMP3612 - Shopping Cart"},
+    product: {id: "#single-product", title: "COMP3612 - Product Details"}
+});
+
+
+
+
 /**
  * Installs event listeners for the view selector buttons on the page
  */
 export function installHeaderEventListeners() {
-    const views = new ViewManager({
-        home: { id: "#home", title: "COMP3612 Store" },
-        browse: { id: "#browse", title: "COMP3612 - Browse Products" },
-        category: { id: "#category", title: "COMP3612 - Shop by Category" },
-        cart: { id: "#cart", title: "COMP3612 - Shopping Cart"},
-        product: {id: "#single-product", title: "COMP3612 - Product Detials"}
-    });
+
     
     const viewButtons = document.querySelectorAll("[data-view]");
     for (let viewButton of viewButtons) {
@@ -21,6 +32,60 @@ export function installHeaderEventListeners() {
     // About is a dialog so it needs its own handlers
     handleAboutButton();
 }
+
+/**
+ * COnnect the home product card and the product detail buttons
+ * to the functions that are called when clicked
+ */
+export function installHomeProductEventListeners(){
+    const card = document.querySelector("#home .product-card-button");
+    card.addEventListener("click", openHomeProduct);
+
+    const specificationsButton = document.querySelector(".specifications-button");
+    const reviewsButton = document.querySelector(".reviews-button");
+    specificationsButton.addEventListener("click", showSpecifications);
+    reviewsButton.addEventListener("click", showReviews);
+}
+
+function showSpecifications(){
+    const specifications = document.querySelector(".product-specifications");
+    const reviews = document.querySelector(".product-reviews");
+    specifications.classList.remove("hidden");
+    reviews.classList.add("hidden");
+}
+
+
+function showReviews(){
+    const specifications = document.querySelector(".product-specifications");
+    const reviews = document.querySelector(".product-reviews");
+    specifications.classList.add("hidden");
+    reviews.classList.remove("hidden");
+}
+
+/** 
+ * Load and display the clicked home product 
+ */
+async function openHomeProduct(event){
+    event.preventDefault();
+
+    const card = event.currentTarget;
+    const productId = card.dataset.productId;
+    //wait for APi to return with the data
+    const product = await fetchProduct(productId);//https://www.w3schools.com/js/js_async_await.asp
+
+    const home = document.querySelector("#home");
+
+    //If a request fails
+    if (product == null){
+        alert("product couldnt be loaded");
+        return;
+    }
+
+    displayProduct(product);
+    views.showView("product");
+    document.title = product.title;
+}
+
 
 /**
  * Sets the event listeners for the filter accordions on the Browse view.

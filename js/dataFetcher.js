@@ -1,8 +1,8 @@
 export async function fetchData() {
     // requestData will return a promise so we need to wait 
     const url = "https://dummyjson.com/products?limit=2";
-    const data = await requestData();
-    return requestData(url);
+    const data = await requestData(url);
+    return data;
 }
 
 
@@ -15,7 +15,7 @@ export function fetchProduct(productId){
  * From MDN docs fetch API
  * https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
  */
-async function requestData() {
+async function requestData(url) {
     //const url = "https://dummyjson.com/products?limit=2";
     try {
         const response = await fetch(url);

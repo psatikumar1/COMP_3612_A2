@@ -65,12 +65,12 @@
             <!--Using flex here rather than grid because the idea would be for featured products to change. Grid doesn't do this as easily. Solved it faster when I tried changing to flex to see what would happen-->
             <div id = "product-cards" class="flex flex-wrap justify-center gap-6">
                 <div class="product-card w-56 h-max flex flex-col items-center hover:scale-103 duration-200">
-                    <div class="product-card-button w-full">
+                    <div class="product-card-button w-full" data-product-id = "2"> <!--producte is loaded with this data-product-id-->
                         <div class="product-card-img bg-stone-200 hover:cursor-pointer aspect-square">
                             <img src="https://cdn.dummyjson.com/product-images/beauty/eyeshadow-palette-with-mirror/thumbnail.webp" alt = "EyeShadow pallete with mirror" class="w-full hover: cursor-pointer">
                         </div>
                         <div class="product-info text-left grid gap-1 mt-2">
-                            <a href="#single-product" data-view = "product" class="hover:cursor-pointer hover:underline text-[16px] grid gap-1">
+                            <a href="#single-product" class="hover:cursor-pointer hover:underline text-[16px] grid gap-1">
                                 <h2 class="product-card-brand font-semibold">Calvin Klein</h2>
                                 <h3 class="product-card-name">Eyeshadow Palette with Mirror</h3>
                             </a>
@@ -312,7 +312,11 @@
                 Reviews
             </button>
 
-            <section class = "product-specifactions min-h-48 border border-stone-300 p-5">
+            <button type = "button" class = "specifications-button rounded-t-sm border border-stone-300 px-4 py-2 hover:bg-amber-100">
+                Specifications
+            </button>
+
+            <section class = "product-specifications min-h-48 border border-stone-300 p-5">
                 <h4 class = "mb-3 font-semibold">Specifications</h4>
                 <ul class = "product-specifications-list"></ul>
             </section>
