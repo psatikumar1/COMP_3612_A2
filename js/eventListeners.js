@@ -86,6 +86,134 @@ async function openHomeProduct(event){
     document.title = product.title;
 }
 
+/**
+ * Displays the details of a product on the page
+ * 
+ */
+function displayProduct(product){
+    setProductText(".product-title", product.title);
+    setProductText(".product-description", product.description);
+    setProductText(".product-price", "$" + product.price.toFixed(2));
+    setProductText(".product-category", product.category);
+    setProductText(".product-breadcrumb-title", product.title);
+    setProductText(".product-sku", product.sku);
+    setProductText(".product-stock", product.availabilityStatus);
+
+    const stars = getStars(product.rating);
+    setProductText(".product-rating", stars + " " + product.rating + " / 5");
+
+    const image = document.querySelector(".product-image");
+    image.src = product.images[0];
+    image.alt = product.title;
+
+    const quantity = document.querySelector(".product-quantity");
+    quantity.value = 1;
+
+    displayProductTags(product.tags);
+    displayProductSpecifications(product);
+    displayProductReviews(product.reviews);
+    showSpecifications();
+}
+
+/** 
+ *  Sets the text content of a product element on the page 
+ */
+function setProductText(selector, text){
+    const element = document.querySelector(selector);
+    element.textContent = text;
+}
+
+
+/**
+ * Generates star icons based on product rating
+ */
+function getStars(rating){
+    let stars = "";
+    const roundedRating = Math.round(rating);
+    for (let number = 1; number <=5; number++){
+        if (number <= roundedRating){
+            stars += "★";
+        } else {
+            stars += "☆";
+        }
+    }
+    return stars;
+}
+
+/**
+ * Displays the product tags on the page 
+ */
+function displayProductTags(tags){
+    const list = document.querySelector(".product-tags");
+    list.textContent = "";
+
+    for(const tag of tags){
+        const item = document.createElement("li");
+        item.textContent = tag;
+        item.className = "border border-amber-200 bg-amber-100 px-2 py-1";
+        list .appendChild(item);
+    }
+}
+
+/**
+ * Displays the product specifications on the page
+ */
+function displayProductSpecifications(product){
+    const list = document.querySelector(".product-specifications-list");
+    list.textContent = "";
+
+    const specifications = [
+        "Weight: " + product.weight,
+        "Width: " + product.dimensions.width,
+        "Height: " + product.dimensions.height,
+        "Depth: " + product.dimensions.depth,
+        "Warranty: " + product.warrantyInformation,
+        "Shipping: " + product.shippingInformation,
+        "Returns: " + product.returnPolicy
+    ];
+
+    for(const spec of specifications){
+        const item = document.createElement("li");
+        item.textContent = spec;
+        item.className = "mb-2";
+        list.appendChild(item);
+    }
+}
+
+/**
+ * Displays the product reviews on the page
+ */
+function displayProductReviews(reviews){
+    const list = document.querySelector(".product-reviews-list");
+    list.textContent = "";
+
+    for (const review of reviews){
+        const item = document.createElement("li");
+        item.className = "mb-4 border-b border-gray-300 pb-2";
+
+        const name = document.createElement("p");
+        name.textContent = review.reviewerName;
+        name.className = "font-semibold";
+        
+        const rating = document.createElement("p");
+        rating.textContent = getStars(review.rating);
+        rating.className = "text-amber-800";
+
+        const date = document.createElement("p");
+        date.textContent = review.date;
+        date.className = "mb-2 text-sm text-stone-600";
+
+        const comment = document.createElement("p");
+        comment.textContent = review.comment;
+
+        item.appendChild(name);
+        item.appendChild(rating);
+        item.appendChild(date);
+        item.appendChild(comment);
+
+        list.appendChild(item);
+    }
+}
 
 /**
  * Sets the event listeners for the filter accordions on the Browse view.

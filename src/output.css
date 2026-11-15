@@ -375,7 +375,7 @@
   .h-max {
     height: max-content;
   }
-  .max-h-8 {
+  .max-h-80 {
     max-height: calc(var(--spacing) * 8);
   }
   .min-h-48 {
@@ -672,6 +672,9 @@
   .border-black {
     border-color: var(--color-black);
   }
+  .border-gray-300 {
+    border-color: var(--color-gray-300);
+  }
   .border-stone-100 {
     border-color: var(--color-stone-100);
   }
@@ -806,6 +809,9 @@
   }
   .pb-1 {
     padding-bottom: var(--spacing);
+  }
+  .pb-2 {
+    padding-bottom: calc(var(--spacing) * 2);
   }
   .pb-3 {
     padding-bottom: calc(var(--spacing) * 3);
