@@ -9,7 +9,8 @@ export function installHeaderEventListeners() {
         home: { id: "#home", title: "COMP3612 Store" },
         browse: { id: "#browse", title: "COMP3612 - Browse Products" },
         category: { id: "#category", title: "COMP3612 - Shop by Category" },
-        cart: { id: "#cart", title: "COMP3612 - Shopping Cart"}
+        cart: { id: "#cart", title: "COMP3612 - Shopping Cart"},
+        product: {id: "#single-product", title: "COMP3612 - Product Detials"}
     });
     
     const viewButtons = document.querySelectorAll("[data-view]");

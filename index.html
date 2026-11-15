@@ -67,10 +67,10 @@
                 <div class="product-card w-56 h-max flex flex-col items-center hover:scale-103 duration-200">
                     <div class="product-card-button w-full">
                         <div class="product-card-img bg-stone-200 hover:cursor-pointer aspect-square">
-                            <img src="https://cdn.dummyjson.com/product-images/beauty/eyeshadow-palette-with-mirror/thumbnail.webp" class="w-full">
+                            <img src="https://cdn.dummyjson.com/product-images/beauty/eyeshadow-palette-with-mirror/thumbnail.webp" alt = "EyeShadow pallete with mirror" class="w-full hover: cursor-pointer">
                         </div>
                         <div class="product-info text-left grid gap-1 mt-2">
-                            <a href="#" class="hover:cursor-pointer hover:underline text-[16px] grid gap-1">
+                            <a href="#single-product" data-view = "product" class="hover:cursor-pointer hover:underline text-[16px] grid gap-1">
                                 <h2 class="product-card-brand font-semibold">Calvin Klein</h2>
                                 <h3 class="product-card-name">Eyeshadow Palette with Mirror</h3>
                             </a>
@@ -274,8 +274,54 @@
 
     <!---SINGLE PRODUCT VIEW--->
     <article id = "single-product" class="page-view w-full hidden">
-        <h2>SINGLE PRODUCT VIEW</h2>
-        <div>PLACEHOLDER FOR JS VIEW SWITCHING TESTING</div>
+        <nav class = "mb-6 test-sm tesxt-stone-600">
+            Home &gt;
+            <span span class = "product-category"></span> &gt;
+            <span span class = "product-breadcrumb-title"></span>
+        </nav>
+
+        <section class = "product-overview grid gap-8 md:grid-cols-2"> <!--https://www.geeksforgeeks.org/css/how-to-use-tailwind-css-grid/-->
+            <img class = "product-image h-96 w-full bg-stone-100 object-contain" alt = "">
+            <section class = "product-information">
+                <h2 class = "product-title mb-3 text-3xl font-semibold text-amber-900"></h2>
+                
+                <p class = "product-price mb-3 text-xl font-semibold"></p>
+                <p class = "mb-2 text-stone-600">SKU <span class = "product-sku"></span>></p>
+                <p class = "product-rating mb-4 text-amber-800"></p>
+                
+                <ul class = "product-tags mb-4 flex flex-wrap gap-2"></ul>
+                
+                <p class = "product-stock mb-3 font-semibold"></p>
+                <p class = "product-description mb-6 leading-6"></p> <!--https://tailwindcss.com/docs/line-height-->
+
+                <label class = "mb-4 block">
+                    Quantity
+                    <input class = "product-quantity ml-2 w-20 rounded-sm border border-stone-300 p-2" type = "number" min = "1" value = "1">
+                </label>
+
+                <button type = "button" class = "product-add-to-cart rounded-sm bg-amber-800 px-6 py-2 font-semibold text-white hover:bg-amber-900 hover:cursor-pointer">
+                    Add to Cart
+                </button>
+            </section>
+        </section>
+
+        <section class = "product-details mt-8">
+            <h3 class = "mb-3 text-xl font-semibold">Product Details</h3>
+
+            <button type = "button" class = "reviews-button rounded-t-sm border border-stone-300 px-4 py-2 hover:bg-amber-900 hover:cursor-pointer">
+                Reviews
+            </button>
+
+            <section class = "product-specifactions min-h-48 border border-stone-300 p-5">
+                <h4 class = "mb-3 font-semibold">Specifications</h4>
+                <ul class = "product-specifications-list"></ul>
+            </section>
+
+            <section class = "product-reviews hidden max-h-8 overflow-y-auto p-5 border border-stone-300"> <!--https://www.geeksforgeeks.org/css/tailwind-css-overflow/-->
+                <h4 class = "mb-3 font-semibold">Reviews</h4>
+                <ul class = "product-reviews-list"></ul>
+            </section>
+        </section>
     </article>
 
     <!---CART VIEW--->
