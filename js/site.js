@@ -1,11 +1,20 @@
+import { ViewManager } from "./viewManager.js";
 import * as EventListeners from "./eventListeners.js";
-import * as Constants from "./constants.js";
+import * as Browse from "./browse.js";
+import { fetchData } from "./dataFetcher.js";
+import { appData } from "./appData.js";
 
 document.addEventListener("DOMContentLoaded", init);
 
 function init() {
-    // Install Static Listeners
-    EventListeners.installHeaderEventListeners();
-    let accordions = EventListeners.installBrowseAccordionEventListeners();
-    const data = EventListeners.installDataFetcher();
+    const views = new ViewManager({
+        home: { id: "#home", title: "COMP3612 Store" },
+        browse: { id: "#browse", title: "COMP3612 - Browse Products" },
+        category: { id: "#category", title: "COMP3612 - Shop by Category" },
+        cart: { id: "#cart", title: "COMP3612 - Shopping Cart"}
+    });
+
+    EventListeners.installHeaderEventListeners(views);
+    Browse.installBrowseAccordions();
+    fetchData();
 }

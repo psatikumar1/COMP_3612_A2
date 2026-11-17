@@ -10,10 +10,24 @@ export function Accordion(parent) {
     this.dropdownIcon = this.dropdownButton.querySelector("img");
     this.filterList = parent.querySelector("ul");
 
+    this.open = () => {
+        this.filterList.classList.remove("hidden");
+        this.dropdownIcon.classList.remove("rotate-90");
+    };
+
+    this.close = () => {
+        this.filterList.classList.add("hidden");
+        this.dropdownIcon.classList.add("rotate-90");
+    };
+
     this.toggle = () => {
-        const isHidden = this.filterList.classList.toggle("hidden");
-        this.dropdownIcon.classList.toggle("rotate-90", isHidden);
-    }
+        const isHidden = this.filterList.classList.contains("hidden");
+        if (isHidden) {
+            this.open();
+        } else {
+            this.close();
+        }
+    };
 
     this.dropdownButton.addEventListener("click", this.toggle);
 }
