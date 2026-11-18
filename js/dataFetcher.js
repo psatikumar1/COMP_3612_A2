@@ -1,3 +1,5 @@
+import { initBrowse } from "./browse.js";
+
 // key to access products in the local storage
 const PRODUCTS_STORE_KEY = "products";
 
@@ -7,7 +9,7 @@ export function fetchData() {
 
 function storeData(data) {
     localStorage.removeItem(PRODUCTS_STORE_KEY);
-    localStorage.setItem(PRODUCTS_STORE_KEY, JSON.stringify(data));
+    localStorage.setItem(PRODUCTS_STORE_KEY, JSON.stringify(data));S
 }
 
 function checkIfSaved() {
@@ -39,6 +41,7 @@ async function requestData() {
 
         const result = await response.json();
         storeData(result.products);
+        initBrowse(result.products);
     } catch (error) {
         console.error(error.message);
     }

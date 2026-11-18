@@ -5,15 +5,20 @@ import { Accordion } from "./accordion.js";
 const accordions = {};
 
 export function initBrowse(products) {
+    installBrowseAccordions();
     renderAllProducts(products);
     buildFilterLists(products);
 }
 
-export function installBrowseAccordions() {
+function installBrowseAccordions() {
     const filterAccordions = document.querySelectorAll(".filter-accordion");
     for (const accordion of filterAccordions) {
-        accordions[accordion.dataset.filter] = new Accordion(accordion);
+        const newAccordion = new Accordion(accordion);
+        accordions[accordion.dataset.filter] = newAccordion;
+        // Now need to populate the accordion with appropriate filters
+        populateAccordion(newAccordion);
     }
+    
 }
 
 /**
@@ -32,7 +37,7 @@ function renderAllProducts(products) {
 }
 
 function createCard(product) {
-
+    
 }
 
 function buildFilterLists(products) {

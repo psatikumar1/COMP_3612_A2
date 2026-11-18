@@ -6,6 +6,7 @@
  *               containing the <button> and <ul> for the filter dropdown and filter list
  */
 export function Accordion(parent) {
+    this.parent = parent;
     this.dropdownButton = parent.querySelector("button");
     this.dropdownIcon = this.dropdownButton.querySelector("img");
     this.filterList = parent.querySelector("ul");
