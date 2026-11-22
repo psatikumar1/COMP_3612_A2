@@ -7,6 +7,7 @@ function init() {
     // Install Static Listeners
     EventListeners.installHeaderEventListeners();
     EventListeners.installHomeProductEventListeners();
+    EventListeners.installCategoryEventListeners();
     let accordions = EventListeners.installBrowseAccordionEventListeners();
     const data = EventListeners.installDataFetcher();
 }

@@ -1,6 +1,6 @@
 export async function fetchData() {
     // requestData will return a promise so we need to wait 
-    const url = "https://dummyjson.com/products?limit=2";
+    const url = "https://dummyjson.com/products?limit=0";
     const data = await requestData(url);
     return data;
 }

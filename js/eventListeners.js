@@ -15,7 +15,116 @@ const views = new ViewManager({
     product: {id: "#single-product", title: "COMP3612 - Product Details"}
 });
 
+/**
+ * 5 categories that contain 11 subcategories 
+ */
+const categoryGroups = {
+    home:[
+            {name: "Furniture", category: "furniture"},
+            {name: "Home Decoration", category: "home-decoration"},
+            {name: "Kitchen Accessories", category: "kitchen-accessories"}
+    ],
+    mens:[
+            {name: "Mens Shirts", category: "mens-shirts"},
+            {name: "Mens Shoes", category: "mens-shoes"},
+            {name: "Mens Watches", category: "mens-watches"}
+    ],
+    tech: [
+            {name: "Laptops", category: "laptops"},
+            {name: "Mobile Accessories", category: "mobile-accessories"}
+    ],
+    groceries:[
+        {name: "Groceries", category: "groceries"}
+    ],
+    "cosmetics-personal-care":[
+            {name: "Beauty", category: "beauty"},
+            {name: "Fragrances", category: "fragrances"}
+    ]
+};
+//To keep track of the latest click. If a button is clicked immediately after another, 
+// this keeps track and makes sure only contents of the 2nd click are displayed
+let categoryRequestNumber = 0; 
 
+/**
+ * Connect the 5 parent buttons and create their subcategory if need be
+ */
+export function installCategoryEventListeners(){
+    const buttons = document.querySelectorAll("#category [data-category]");
+    for (let button of buttons){
+        button.addEventListener("click", toggleCategory);
+        button.classList.add("w-full");
+
+        const image = button.querySelector("img");
+        image.className = "h-36 w-full object-contain"; //Give parent cateogry a consistent size in their cell
+
+        const group = categoryGroups[button.dataset.category];
+        
+        if(group.length > 1){ //If there are any subcategories in the card
+            createSubCategoryList(button, group);
+        }
+    }
+}
+
+
+
+/**
+ * Adds subcategory boxs below the parent cateogry
+ */
+function createSubCategoryList(parentButton, group){
+    const list = document.createElement("ul");
+    list.className = "subcategory-list hidden mt-4 grid gap-2 rounded-md border border-amber-200 bg-white p-4 shadow-md";
+
+    for(let subcategory of group){
+        const item = document.createElement("li");
+        const button = document.createElement("button");
+        button.type = "button";
+        button.dataset.category = subcategory.category;
+        button.textContent = subcategory.name;
+        button.className = "subcategory-option rounded-md hover:bg-amber-100";
+        button.addEventListener("click", openSubcategory);
+
+        item.appendChild(button);
+        list.appendChild(item);
+    }
+
+    const parentCard = parentButton.parentElement;
+    parentCard.appendChild(list);
+}
+
+/**
+ * Open or close the parent category box if needed
+ */
+function toggleCategory(event){
+    const button = event.currentTarget;
+    const group = categoryGroups[button.dataset.category];
+
+    if(group.length === 1){ //If Groceries is clicked
+        closeSubcategories();
+        openCategoryProducts(group[0].category, group[0].name);
+        return;
+    }
+
+    //Toggle the subcategory list if it is already open or closed
+    const parentCard = button.parentElement;
+    const list = parentCard.querySelector(".subcategory-list");
+    const wasHidden = list.classList.contains("hidden");
+    closeSubcategories();
+    if(wasHidden){
+        list.classList.remove("hidden");
+    }
+}
+
+function closeSubcategories(){
+    const lists = document.querySelectorAll(".subcategory-list");
+    for (let list of lists){
+        list.classList.add("hidden");
+    }   
+}
+
+function openSubcategory(event){
+    const button = event.currentTarget;
+    openCategoryProducts(button.dataset.category, button.textContent);
+}
 
 
 /**
@@ -32,6 +141,8 @@ export function installHeaderEventListeners() {
     // About is a dialog so it needs its own handlers
     handleAboutButton();
 }
+
+
 
 /**
  * COnnect the home product card and the product detail buttons
