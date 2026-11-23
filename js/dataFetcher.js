@@ -9,15 +9,15 @@ export function fetchData() {
 
 function storeData(data) {
     localStorage.removeItem(PRODUCTS_STORE_KEY);
-    localStorage.setItem(PRODUCTS_STORE_KEY, JSON.stringify(data));S
+    localStorage.setItem(PRODUCTS_STORE_KEY, JSON.stringify(data));
 }
 
 function checkIfSaved() {
     const savedData = localStorage.getItem(PRODUCTS_STORE_KEY);
     if (savedData) {
-        return true;
+        return savedData;
     }
-    return false;
+    return null;
 }
 
 /**
@@ -28,9 +28,9 @@ function checkIfSaved() {
 async function requestData() {
     const url = "https://dummyjson.com/products?limit=1";
     try {
-        if (checkIfSaved()) {
-            const storage = JSON.parse(localStorage.getItem(PRODUCTS_STORE_KEY));
-            initBrowse(storage.products);
+        const savedData = checkIfSaved();
+        if (savedData) {
+            initBrowse(JSON.parse(savedData).products);
             return;
         }
 
