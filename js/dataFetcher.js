@@ -29,6 +29,8 @@ async function requestData() {
     const url = "https://dummyjson.com/products?limit=1";
     try {
         if (checkIfSaved()) {
+            const storage = JSON.parse(localStorage.getItem(PRODUCTS_STORE_KEY));
+            initBrowse(storage.products);
             return;
         }
 
