@@ -126,6 +126,94 @@ function openSubcategory(event){
     openCategoryProducts(button.dataset.category, button.textContent);
 }
 
+/**
+ * Finds products belonging to subcategory
+ */
+async function openCategoryProducts(category, categoryName){
+    const data = await fetchData();
+    const categoryView = document.querySelector("#category");
+    if(categoryView.classList.contains("hidden")){
+        return;
+    }
+
+    if (data == null){
+        alert("Products could not be loaded");
+        return;
+    }
+
+    const products = [];
+    for(let product of data.products){
+        if(product.category === category){
+            products.push(product);
+        }
+    }
+
+    displayBrowseProducts(products, categoryName);
+    views.showView("browse");
+}
+
+
+/**
+ * Show the selected category products in the Browse view
+ */
+function displayBrowseProducts(products, categoryName){
+
+    //Clear the previous results and filters
+    const results = document.querySelector("#search-results");
+    results.textContent = "";
+    const filter = document.querySelector("#selected-filters ul");
+    filter.textContent = "";
+    
+    //Display the selected category name in the filter section
+    const label = document.createElement("li");
+    label.textContent = categoryName;
+    label.className = "border border-amber-200 bg-amber-100 px-2 py-1";
+    filter.appendChild(label);
+
+    const sortOrder = document.querySelector("#sort-order-dropdown");
+    sortOrder.value = "P-Name_AZ";
+
+    for(let product of products){
+        const card = createBrowseProductCard(product);
+        results.appendChild(card);
+    }
+}
+
+/**
+ * Creates a product card in the Browse page
+ */
+function createBrowseProductCard(product){
+    const card = document.createElement("article");
+    card.className = "product-card bg-white p-3";
+
+    const link = document.createElement("a");
+    link.href = "#single-product";
+    link.dataset.productId = product.id;
+    link.className = "block hover:underline";
+    link.addEventListener("click", openHomeProduct);
+
+    const image = document.createElement("img");
+    image.src = product.thumbnail;
+    image.alt = product.title;
+    image.className = "mb-2 h-48 w-full object-contain";
+
+    const title = document.createElement("h3");
+    title.textContent = product.title;
+    title.className = "mb-1 text-lg font-semibold text-amber-900";
+
+    const price = document.createElement("p");
+    price.textContent = "$" + product.price.toFixed(2);
+    price.className = "text-amber-900 mt-2";
+
+    link.appendChild(image);
+    link.appendChild(title);
+    link.appendChild(price);
+    card.appendChild(link);
+
+    return card;
+}
+
+
 
 /**
  * Installs event listeners for the view selector buttons on the page
@@ -150,27 +238,7 @@ export function installHeaderEventListeners() {
  */
 export function installHomeProductEventListeners(){
     const card = document.querySelector("#home .product-card-button");
-    card.addEventListener("click", openHomeProduct);
-
-    const specificationsButton = document.querySelector(".specifications-button");
-    const reviewsButton = document.querySelector(".reviews-button");
-    specificationsButton.addEventListener("click", showSpecifications);
-    reviewsButton.addEventListener("click", showReviews);
-}
-
-function showSpecifications(){
-    const specifications = document.querySelector(".product-specifications");
-    const reviews = document.querySelector(".product-reviews");
-    specifications.classList.remove("hidden");
-    reviews.classList.add("hidden");
-}
-
-
-function showReviews(){
-    const specifications = document.querySelector(".product-specifications");
-    const reviews = document.querySelector(".product-reviews");
-    specifications.classList.add("hidden");
-    reviews.classList.remove("hidden");
+    card.addEventListener("click", openHomeProduct); 
 }
 
 /** 
@@ -223,7 +291,7 @@ function displayProduct(product){
     displayProductTags(product.tags);
     displayProductSpecifications(product);
     displayProductReviews(product.reviews);
-    showSpecifications();
+    //showSpecifications();
 }
 
 /** 
