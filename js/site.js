@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", init);
 function init() {
     // Install Static Listeners
     EventListeners.installHeaderEventListeners();
+    EventListeners.installCartEventListeners();
     EventListeners.installHomeProductEventListeners();
     EventListeners.installCategoryEventListeners();
     let accordions = EventListeners.installBrowseAccordionEventListeners();

@@ -237,10 +237,9 @@ export function installHeaderEventListeners() {
  * Connects the cart button to the function that is called when clicked
  */
 export function installCartEventListeners(){
-    const savedCart = localStorage.getItem("cart");
+    const savedCart = localStorage.getItem("comp3612-cart");
 
     if (savedCart != null){
-        cart = JSON.parse(savedCart);
         const savedItems = JSON.parse(savedCart);
         
         if (Array.isArray(savedItems)){
@@ -254,9 +253,9 @@ export function installCartEventListeners(){
     const productButton = document.querySelector(".product-add-to-cart");
     productButton.addEventListener("click", addToCart);
 
-    const homeButtons = document.querySelectorAll(".home-add-to-cart");
+    const homeButtons = document.querySelectorAll("#home .add-to-cart-btn");
     for (let button of homeButtons){
-        button.addEventListener("click", addToCart);
+        button.addEventListener("click", addHomeToCart);
     }
 
     const methodSelect = document.querySelector("#shipping-method");
@@ -269,10 +268,22 @@ export function installCartEventListeners(){
 
 }
 
+function addCartButton(card, product){
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = "Add to Cart";
+    button.className = "mt-2 rounded-sm bg-amber-800 px-4 py-2 text-white hover:cursor-pointer";
+
+    button.addEventListener("click", () => {
+        updateCart(product, 1);
+    })
+
+    card.appendChild(button);
+}
 
 /**
  * Adds product to cart using the current product and quantity selected
- */
+ 
 function addToCart(event){
     event.preventDefault();
 
@@ -286,37 +297,70 @@ function addToCart(event){
 
     addtoCart(currentProduct, quantity);
 }
- 
+ */
 
 /**
  * Add featured home product to the cart
  */
-async function addtoCart(product, quantity){
-    const existingItem = cart.find(item => item.id === product.id);
-    if (existingItem){
-        existingItem.quantity += quantity;
-    } else {
-        cart.push({id: product.id, title: product.title, price: product.price, quantity: quantity});
-    }
-    saveCart();
-    displayCart();
+
+async function addHomeToCart(event){
+    const button = event.currentTarget;
+    const card = button.parentElement;
+    const productLink = document.querySelector(".product-cart-button");
+
+    const product = await fetchProduct(productLink.dataset.productId);
+    updateCart(product, 1);
 }
+ 
 
 
 /**
  * Add a new product to cart or update the quantity if it already exists in the cart
  */
-function addToCart(product, quantity){
-    const existingItem = cart.find(item => item.id === product.id);
-    if (existingItem){
-        existingItem.quantity += quantity;
-    } else {
-        cart.push({id: product.id, title: product.title, price: product.price, quantity: quantity});
+function addToCart(event){
+    event.preventDefault();
+    if (currentProduct == null){
+        return;
     }
 
-    localStorage.setItem("cart", JSON.stringify(cart));
+    const quantityInput = document.querySelector(".product-quantity");
+    const quantity = Number(quantityInput.value);
+
+    updateCart(currentProduct, quantity);
+}
+
+function updateCart(product, quantity){
+    const existingItem = cart.find(item => item.id === product.id);
+
+    if (existingItem){
+        existingItem.quantity += quantity;
+    }else{
+        cart.push({id: product.id, title: product.title, price:product.price, thumbnail: product.thumbnail, quantity: quantity})
+    }
+    saveCart();
     displayCart();
 }
+
+/**
+ * 
+ */
+function appendCartCell(row, text, className){
+    const cell = document.createElement("td");
+    cell.textContent = text;
+    cell.className = className;
+    row.appendChild(cell);
+}
+
+/**
+ * 
+ */
+function removeCartItem(productId){
+    cart = cart.filter(item => item.id != productId);
+    saveCart();
+    displayCart();
+}
+
+
 
 /**
  * Save cart to local storage
@@ -339,7 +383,7 @@ function updateCartSummary(){
 
     let tax = 0;
     if (destination.value === "Canada"){
-        tax = merchandise * 0.50;
+        tax = merchandise * 0.05;
     }
 
     const total = merchandise + shipping + tax;
@@ -364,9 +408,9 @@ function getShippingCost(merchandise, method, destination){
     }
 
     const shippingPrices = {
-        Standard: {Canada: 10, "United States": 15, Internaltional: 20},
-        Express: {Canada: 25, "United States": 25, Internaltional: 30},
-        Priority: {Canada: 35, "United States": 50, Internaltional: 50}
+        Standard: {Canada: 10, "United States": 15, International: 20},
+        Express: {Canada: 25, "United States": 25, International: 30},
+        Priority: {Canada: 35, "United States": 50, International: 50}
     }
     return shippingPrices[method][destination];
 }
@@ -385,7 +429,7 @@ function displayCart(){
         itemCount += item.quantity;
     }
 
-    setProductText("#cart-button", itemCount);
+    setProductText("#cart-btn", itemCount);
 
     const emptyMessage = document.querySelector("#cart-empty-message");
     if (cart.length > 0){
@@ -401,9 +445,55 @@ function displayCart(){
 /**
  * Clears old table, adds current products, refresh totals 
  */
+function createCartRow(item){
+    const row = document.createElement("tr");
+    row.className = "border-b border-stone-200";
+    
+    row.appendChild(createCartProductCell(item));
+    appendCartCell(row, "$" + item.price.toFixed(2), "text-right");
+    appendCartCell(row, item.quantity, "text-center");
+
+    const subtotal = item.price * item.quantity;
+    appendCartCell(row, "$" + subtotal.toFixed(2), "text-right");
+    const cell = document.createElement("td");
+    cell.className = "pl-6";
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = "Remove";
+    button.className = "ml-4 text-amber-900 underline hover:cursor-pointer";
+    button.addEventListener("click", () => {
+        removeCartItem(item.id);
+    })
+
+    cell.appendChild(button);
+    row.appendChild(cell);
+    return row;
+
+}
 
 
+/**
+ * 
+ */
+function createCartProductCell(item){
+    const cell = document.createElement("td");
+    cell.className = "p-4";
 
+    const product = document.createElement("div");
+    product.className = "flex items-center gap-4";
+
+    const image = document.createElement("img");
+    image.src = item.thumbnail;
+    image.className = "h-20 w-20 object-contain";
+
+    const title = document.createElement("span");
+    title.textContent = item.title;
+    
+    product.appendChild(image);
+    product.appendChild(title);
+    cell.appendChild(product);
+    return cell;
+}
 
 
 /**

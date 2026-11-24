@@ -326,7 +326,7 @@
         <h2 class = "mb-10 text-center text-3xl font-semibold">Shopping Cart</h2>
         <p id = "cart-empty-message">Your shopping cart is empty.</p>
         <table class = "w-full text-left">
-            <thread class = "border-b border-stone-300"> <!--https://tailwindcss.com/docs/border-color-->
+            <thead class = "border-b border-stone-300"> <!--https://tailwindcss.com/docs/border-color-->
                 <tr class = "pb-3">
                     <th class = "pb-3">Items</th>
                     <th class = "pb-3 text-right">Price</th>
@@ -334,7 +334,7 @@
                     <th class = "pb-3 text-right">Subtotal</th>
                     <th></th>
                 </tr>
-            </thread>
+            </thead>
 
             <tbody class = "cart-items">
                 <!--Temp row used for a styling example-->
@@ -342,13 +342,13 @@
             </tbody>
         </table>
 
-        <section class = "mt-10 grid gap-10 ">
+        <section class = "rounded-xl bg-amber-50 p-6 text-center">
             <section>
                 <h3 class = "mb-3 text-xl font-semibold">Delivery</h3>
-                <section class = "mb-4 block">
+                <section class = "mb-4 flex flex-col items-center gap-4">
                     <label>
                         <p>Method</p>
-                        <select id = "shipping-method" class = "delivery-method mt-1 block w-25 rounded-sm border
+                        <select id = "shipping-method" class = "delivery-method mt-1 block w-60 rounded-md p-2 text-center border
                                              border-stone-200 bg-white">
                             <option>Standard</option>
                             <option>Express</option>
@@ -358,7 +358,7 @@
                 
                 <label class = "block">
                     <p>Destination</p>
-                    <select id = "shipping-destination" class = "delivery-method mt-1 block w-25 rounded-sm border
+                    <select id = "shipping-destination" class = "delivery-method mt-1 block w-60 rounded-md p-2 text-center border
                                              border-stone-200 bg-white">
                         <option>Canada</option>
                         <option>United States</option>
@@ -377,8 +377,9 @@
             </section>
             <button type = "button" class = "checkout-button mt-4 w-30 rounded-sm bg-sky-800
                 py-2 font-semibold text-white hover:bg-sky-600 hover:cursor-pointer">
-                Checkout</button>
-        <section>
+                Checkout
+            </button>
+        </section>
     </article>
 
 
