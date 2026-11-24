@@ -1,3 +1,4 @@
+import { initBrowse } from "./browse.js";
 /**
  * Creates a view manager object containing view objects
  * 
@@ -22,5 +23,13 @@ export function ViewManager(views) {
 
         // Set the title to match the selected view
         document.title = viewTitle;
+
+        if (viewName == "browse") {
+            startBrowseView();
+        }
     }
+}
+
+async function startBrowseView() {
+    await initBrowse();
 }
