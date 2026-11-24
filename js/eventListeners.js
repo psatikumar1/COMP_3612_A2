@@ -3,6 +3,8 @@ import { ViewManager } from "./viewManager.js";
 import { fetchData } from "./dataFetcher.js";
 import { fetchProduct } from "./dataFetcher.js";
 
+let currentProduct = null;
+let cart = [];
 
 /**
  * Moved this to flobal so that it can also be accessed by openHomeProduct()
@@ -231,6 +233,178 @@ export function installHeaderEventListeners() {
 }
 
 
+/**
+ * Connects the cart button to the function that is called when clicked
+ */
+export function installCartEventListeners(){
+    const savedCart = localStorage.getItem("cart");
+
+    if (savedCart != null){
+        cart = JSON.parse(savedCart);
+        const savedItems = JSON.parse(savedCart);
+        
+        if (Array.isArray(savedItems)){
+            cart = savedItems;
+        }
+    }
+    else{
+        console.log("No saved cart found in localStorage");
+    }
+
+    const productButton = document.querySelector(".product-add-to-cart");
+    productButton.addEventListener("click", addToCart);
+
+    const homeButtons = document.querySelectorAll(".home-add-to-cart");
+    for (let button of homeButtons){
+        button.addEventListener("click", addToCart);
+    }
+
+    const methodSelect = document.querySelector("#shipping-method");
+    methodSelect.addEventListener("change", updateCartSummary);
+
+    const destinationSelect = document.querySelector("#shipping-destination");
+    destinationSelect.addEventListener("change", updateCartSummary);
+
+    displayCart();
+
+}
+
+
+/**
+ * Adds product to cart using the current product and quantity selected
+ */
+function addToCart(event){
+    event.preventDefault();
+
+    const quantityInput = document.querySelector(".product-quantity");
+    const quantity = Number(quantityInput.value);
+
+    if (isNaN(quantity) || quantity <= 0){
+        alert("Please enter a valid quantity");
+        return;
+    }
+
+    addtoCart(currentProduct, quantity);
+}
+ 
+
+/**
+ * Add featured home product to the cart
+ */
+async function addtoCart(product, quantity){
+    const existingItem = cart.find(item => item.id === product.id);
+    if (existingItem){
+        existingItem.quantity += quantity;
+    } else {
+        cart.push({id: product.id, title: product.title, price: product.price, quantity: quantity});
+    }
+    saveCart();
+    displayCart();
+}
+
+
+/**
+ * Add a new product to cart or update the quantity if it already exists in the cart
+ */
+function addToCart(product, quantity){
+    const existingItem = cart.find(item => item.id === product.id);
+    if (existingItem){
+        existingItem.quantity += quantity;
+    } else {
+        cart.push({id: product.id, title: product.title, price: product.price, quantity: quantity});
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    displayCart();
+}
+
+/**
+ * Save cart to local storage
+ */
+function saveCart(){
+    localStorage.setItem("comp3612-cart", JSON.stringify(cart));
+}
+
+/**
+ * Calculate and display the totals
+ */
+function updateCartSummary(){
+    let merchandise = 0;
+    for(const item of cart){
+        merchandise += item.price * item.quantity;
+    }
+    const method = document.querySelector("#shipping-method");
+    const destination = document.querySelector("#shipping-destination");
+    const shipping = getShippingCost(merchandise, method.value, destination.value);
+
+    let tax = 0;
+    if (destination.value === "Canada"){
+        tax = merchandise * 0.50;
+    }
+
+    const total = merchandise + shipping + tax;
+    setProductText("#merchandise-total", "$" + merchandise.toFixed(2));
+    setProductText("#shipping-cost", "$" + shipping.toFixed(2));
+    setProductText("#tax-amount", "$" + tax.toFixed(2));
+    setProductText("#total-cost", "$" + total.toFixed(2));
+
+    let isEmpty = cart.length === 0; 
+    method.disabled = isEmpty;
+    destination.disabled = isEmpty;
+    document.querySelector(".checkout-button").disabled = isEmpty;
+}
+
+/**
+ * Decide the shipping cost based on cart totals and selections
+ */
+
+function getShippingCost(merchandise, method, destination){
+    if (cart.length === 0 || merchandise > 500){ //as per assignment requirements
+        return 0;
+    }
+
+    const shippingPrices = {
+        Standard: {Canada: 10, "United States": 15, Internaltional: 20},
+        Express: {Canada: 25, "United States": 25, Internaltional: 30},
+        Priority: {Canada: 35, "United States": 50, Internaltional: 50}
+    }
+    return shippingPrices[method][destination];
+}
+
+/**
+ * Display the final, updated cart
+ */
+function displayCart(){
+    const tableBody = document.querySelector(".cart-items");
+    tableBody.textContent = "";
+
+    let itemCount = 0;
+    for (const item of cart){
+        const row = createCartRow(item);
+        tableBody.appendChild(row);
+        itemCount += item.quantity;
+    }
+
+    setProductText("#cart-button", itemCount);
+
+    const emptyMessage = document.querySelector("#cart-empty-message");
+    if (cart.length > 0){
+        emptyMessage.classList.add("hidden");
+    }else{
+        emptyMessage.classList.remove("hidden");
+    }
+
+    updateCartSummary();
+}
+
+
+/**
+ * Clears old table, adds current products, refresh totals 
+ */
+
+
+
+
 
 /**
  * COnnect the home product card and the product detail buttons
@@ -266,10 +440,11 @@ async function openHomeProduct(event){
 }
 
 /**
- * Displays the details of a product on the page
+ * Displays the details of a product on the single product view page
  * 
  */
 function displayProduct(product){
+    currentProduct = product;
     setProductText(".product-title", product.title);
     setProductText(".product-description", product.description);
     setProductText(".product-price", "$" + product.price.toFixed(2));

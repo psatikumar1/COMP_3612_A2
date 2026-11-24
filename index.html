@@ -338,32 +338,7 @@
 
             <tbody class = "cart-items">
                 <!--Temp row used for a styling example-->
-                <tr class=" group border-b border-stone-200">
-                <td class="py-4 pr-4">
-                    <div class="flex items-center gap-4">
-                        <button type="button" class="text-sm text-amber-900 underline hover:cursor-pointer">
-                            Remove
-                        </button>
 
-                        <img
-                            src="https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp"
-                            alt="Essence Mascara Lash Princess"
-                            class="h-20 w-20 object-contain"
-                        >
-                        <span>Essence Mascara Lash Princess</span>
-                    </div>
-                </td>
-                <td class="text-right">$9.99</td>
-                <td class="text-center">2</td>
-                <td class="text-right">$19.98</td>
-                <td class = "w-10 pl-2">
-                    <!--https://stackoverflow.com/questions/60917112/displaying-button-when-hovering-over-div-in-tailwindcss-->
-                    <section class = "invisible flex flex-col gap-1 group-hover:visible group-focus-within:visible">
-                        <button type = "button" class = "rounded-sm-border">+</button>
-                        <button type = "button" class = "rounded-sm-border">-</button>
-                    </section>
-                </td>
-                </tr>
             </tbody>
         </table>
 
@@ -373,7 +348,7 @@
                 <section class = "mb-4 block">
                     <label>
                         <p>Method</p>
-                        <select class = "delivery-method mt-1 block w-25 rounded-sm border
+                        <select id = "shipping-method" class = "delivery-method mt-1 block w-25 rounded-sm border
                                              border-stone-200 bg-white">
                             <option>Standard</option>
                             <option>Express</option>
@@ -383,7 +358,7 @@
                 
                 <label class = "block">
                     <p>Destination</p>
-                    <select class = "delivery-method mt-1 block w-25 rounded-sm border
+                    <select id = "shipping-destination" class = "delivery-method mt-1 block w-25 rounded-sm border
                                              border-stone-200 bg-white">
                         <option>Canada</option>
                         <option>United States</option>
@@ -395,10 +370,10 @@
 
             <section class = "border-t border-stone-300 pt-4">
                 <h3 class = "mb-3 text-xl font-semibold">Summary</h3>
-                <p class = "mb-3 flex justify-between">Merchandise</p>
-                <p class = "mb-3 flex justify-between">Shipping</p>
-                <p class = "mb-3 flex justify-between">Tax</p>
-                <p class = "mb-3 flex justify-between"><strong>Total</strong></p>
+                <p class = "mb-3 flex justify-between">Merchandise <span id = "merchandise-total">$0.00</span></p>
+                <p class = "mb-3 flex justify-between">Shipping <span id = "shipping-cost">$0.00</span></p>
+                <p class = "mb-3 flex justify-between">Tax <span id = "tax-amount">$0.00</span></p>
+                <p class = "mb-3 flex justify-between"><strong>Total <span id = "total-cost">$0.00</span></strong></p>
             </section>
             <button type = "button" class = "checkout-button mt-4 w-30 rounded-sm bg-sky-800
                 py-2 font-semibold text-white hover:bg-sky-600 hover:cursor-pointer">
