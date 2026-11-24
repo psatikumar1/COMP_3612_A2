@@ -5,7 +5,7 @@ import { fetchData } from "./dataFetcher.js";
 
 document.addEventListener("DOMContentLoaded", init);
 
-function init() {
+async function init() {
     const views = new ViewManager({
         home: { id: "#home", title: "COMP3612 Store" },
         browse: { id: "#browse", title: "COMP3612 - Browse Products" },
@@ -14,5 +14,5 @@ function init() {
     });
 
     EventListeners.installHeaderEventListeners(views);
-    fetchData();
+    const data = await fetchData();
 }

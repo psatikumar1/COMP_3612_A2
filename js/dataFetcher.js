@@ -3,8 +3,9 @@ import { initBrowse } from "./browse.js";
 // key to access products in the local storage
 const PRODUCTS_STORE_KEY = "products";
 
-export function fetchData() {
-    requestData();
+export async function fetchData() {
+    const data = await requestData();
+    return data;
 }
 
 function storeData(data) {
@@ -26,14 +27,15 @@ function checkIfSaved() {
  * https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
  */
 async function requestData() {
-    const url = "https://dummyjson.com/products?limit=1";
+    const url = "https://dummyjson.com/products?limit=0";
     try {
         const savedData = checkIfSaved();
         if (savedData) {
-            initBrowse(JSON.parse(savedData).products);
-            return;
+            console.log("Returning saved data");
+            return (JSON.parse(savedData));
         }
 
+        console.log("Fetching data from server");
         const response = await fetch(url);
         // Check if error was 404 not found (other errors will be rejected automatically
         // by await fetch(url))
@@ -43,7 +45,7 @@ async function requestData() {
 
         const result = await response.json();
         storeData(result.products);
-        initBrowse(result.products);
+        return result.products;
     } catch (error) {
         console.error(error.message);
     }
