@@ -5,8 +5,15 @@ import { fetchData } from "./dataFetcher.js";
 // i.e. accordions = { brands: [], categories: []...}
 const accordions = {};
 
-export async function initBrowse() {
+export async function initBrowse() { 
     const products = await fetchData();
+
+    // remove old stuff (if it exists)
+    for (const idx in accordions) {
+        accordions[idx].destroy();
+        delete accordions[idx];
+    }
+
     installBrowseAccordions(products);
     //renderAllProducts(products);
 }
@@ -16,12 +23,14 @@ function installBrowseAccordions(products) {
 
     for (const accordion of filterAccordions) {
         const newAccordion = new Accordion(accordion);
-        
+
         const filter = accordion.dataset.filter;
+        
         if (!accordions[filter]) {
             accordions[filter] = [];
         }
-        accordions[filter].push(newAccordion);
+
+        accordions[filter] = newAccordion;
 
         // Price accordion has different requirements, so this is a separate function
         if (filter === "tags") {
@@ -43,7 +52,6 @@ function installBrowseAccordions(products) {
         const attributeItems = getFilterItems(filter, products);
         populateAccordion(newAccordion, attributeItems);
     }
-    console.log(accordions);
 }
 
 /**
@@ -57,17 +65,18 @@ function installBrowseAccordions(products) {
  */
 function populateAccordion(accordion, attributeItems) {
     const ul = accordion.filterList;
-    for (const attribute of attributeItems) {
+    for (let attribute of attributeItems) {
+        attribute = sanitizeAttribute(attribute);
         const li = document.createElement("li");
         li.className = "ml-2";
 
         const label = document.createElement("label");
-        label.className = "flex hover:cursor-pointer text-stone-600";
+        label.className = "flex hover:cursor-pointer text-stone-800";
 
         const input = document.createElement("input");
         input.type = "checkbox";
         const span = document.createElement("span");
-        span.className = "pl-2 text-[16px] text-stone-600";
+        span.className = "pl-2 text-[16px] text-stone-800";
         span.textContent = attribute;
 
         label.appendChild(input);
@@ -77,8 +86,19 @@ function populateAccordion(accordion, attributeItems) {
         ul.appendChild(li);
     }
 
+    function sanitizeAttribute(attribute) {
+        let sanitizedAttribute = attribute.replace('-', ' ');
+        sanitizedAttribute = sanitizedAttribute.charAt(0).toUpperCase() + sanitizedAttribute.slice(1);        
+        return sanitizedAttribute;
+    }
 }
 
+
+/**
+ * @brief Populates the price filter accordion
+ * @param {*} accordion 
+ * @param {*} products 
+ */
 function populatePriceAccordion(accordion, products) {
     let priceRanges = getPriceRanges(products);
 
@@ -96,11 +116,11 @@ function populatePriceAccordion(accordion, products) {
         div.className = "flex w-full items-center justify-between";
 
         const priceSpan = document.createElement("span");
-        priceSpan.className = "pl-2 text-[16px] text-stone-600";
+        priceSpan.className = "pl-2 text-[16px] text-stone-800";
         priceSpan.textContent = price.range;
 
         const countSpan = document.createElement("span");
-        countSpan.className = "pr-2 text-[16px] text-stone-600";
+        countSpan.className = "pr-2 text-[16px] text-stone-800";
         countSpan.textContent = `(${price.count})`;
 
         div.appendChild(priceSpan);
@@ -151,15 +171,83 @@ function populatePriceAccordion(accordion, products) {
     }
 }
 
+/**
+ * @brief Populates the tags filter accordion
+ * @param {*} newAccordion 
+ * @param {*} products 
+ */
 function populateTagsAccordion(accordion, products) {
+    let tags = getTags(products);
+    const ul = accordion.filterList;
+    for (const tag of tags) {
+        const li = document.createElement("li");
+        li.className = "ml-2";
+
+        const label = document.createElement("li");
+        label.className = "flex hover:cursor-pointer";
+        
+        const input = document.createElement("input");
+        input.type = "checkbox";
+        const span = document.createElement("span");
+        span.className = "pl-2 text-[16px] text-stone-800";
+        span.textContent = tag;
+
+        label.append(input, span);
+        li.append(label);
+        ul.append(li);
+    }
+    
+    function getTags(products) {
+        let tagList = [];
+        for (const product of products) {
+            const productTags = product.tags;
+            for (let tag of productTags) {
+                // make sure the first letter is capitalized
+                tag = tag.charAt(0).toUpperCase() + tag.slice(1);
+                if (!tagList.includes(tag)) {
+                    tagList.push(tag);
+                }
+            }
+        }
+        return tagList;
+    }
 
 }
 
 function populateRatingAccordion(accordion, products) {
+    const ul = accordion.filterList;
 
+    for (let i = 0; i < 5; i++) {
+        const li = document.createElement("li");
+        li.className = "ml-2";
+
+        const label = document.createElement("label");
+        label.className = "flex hover:cursor-pointer";
+
+        const input = document.createElement("input");
+        input.type = "checkbox";
+        input.dataset.starRating = i + 1;
+
+        const stars = getNumStars1(i + 1);
+
+        label.append(input, stars);
+        li.append(label);
+        ul.append(li);
+    }
+
+    function getNumStars(numStars) {
+        const span = document.createElement("span");
+        span.className = "ml-1 flex gap-[0.5]";
+        for (let i = 1; i < numStars + 1; i++) {
+            const img = document.createElement("img");
+            img.src = "../assets/star_rate.svg";
+            img.className = "w-5 h-5";
+            span.append(img);
+        }
+        return span;
+    }
 }
 
-//FUNCTION DOES NOT WORK AS INTENDED
 function getFilterItems(attribute, products) {
     // e.g. if filter is "brands" we will grab all brand names 
     // from products and insert them here
@@ -192,12 +280,15 @@ function getFilterItems(attribute, products) {
 function medianOfList(list) {
     let length = list.length;
     let median;
+    
     if (length % 2 == 0) {
         let low = Math.floor(length / 2);
         let high = Math.ceil(length / 2);
         median = (list[low] + list[high]) / 2;
+    } else {
+        median = list[length / 2].price;
     }
-    median = list[length / 2].price;
+
     return median;
 }
 

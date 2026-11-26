@@ -24,7 +24,6 @@ export function Accordion(parent) {
     this.toggle = () => {
         const isHidden = this.filterList.classList.contains("hidden");
         console.log(`Clicked: ${this.parent.id}`);
-        console.log(`\t ${isHidden}`);
 
         if (isHidden) {
             this.open();
@@ -33,5 +32,16 @@ export function Accordion(parent) {
         }
     };
 
+    /**
+     * Destroys this accordion so it is not duplicated and event listeners
+     * are not stacked when the Browse view is loaded and unloaded 
+     * multiple times
+     */
+    this.destroy = () => {
+        this.dropdownButton.removeEventListener("click", this.toggle);
+        this.filterList.innerHTML = "";
+    }
+
+    
     this.dropdownButton.addEventListener("click", this.toggle);
 }
