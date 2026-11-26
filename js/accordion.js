@@ -23,6 +23,9 @@ export function Accordion(parent) {
 
     this.toggle = () => {
         const isHidden = this.filterList.classList.contains("hidden");
+        console.log(`Clicked: ${this.parent.id}`);
+        console.log(`\t ${isHidden}`);
+
         if (isHidden) {
             this.open();
         } else {

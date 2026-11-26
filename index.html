@@ -169,7 +169,10 @@
                     <!-- <li class="ml-2">
                         <label class="flex hover:cursor-pointer">
                             <input type="checkbox"/>
-                            <span class="pl-2 text-[16px]">Essence</span>
+                            <div class=flex space-between>
+                                <span class="pl-2 text-[16px]">Essence</span>
+                                <span class="pl-2 text-[16px]">$Price/rating/tag</span>
+                            </div>
                         </label>
                     </li> -->
                 </ul>
@@ -367,11 +370,14 @@
     <!---ABOUT VIEW--->
         <dialog class = "about-dialog m-auto w-96 max-w-full rounded-md bg-white p-6"> <!--https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog-->
             <header class = "mb-5 flex items-center justify-between">
-                <button class = "about-close rounded-sm bg-amber-100 p-1 hover:bg-amber-200 hover:cursor-pointer">
+                <h2 class = "text-2xl font-semibold text-amber-900">
+                    <strong>About Us</strong>
+                </h2>
+                <button class = "about-close rounded-sm bg-amber-100 p-2 hover:bg-amber-200 hover:cursor-pointer">
                     <!--<img src="assets/x_button.svg" class="w-4 h-4"/>-->
                     Close
                 </button>
-                <h2 class = "text-2xl font-semibold text-amber-900"><strong>About Us</strong></h2>
+                
             </header>
             <section class = "mb-5">
                 <h3 class = "mb-2 flex items-center gap-2 font-semibold text-amber-900">
@@ -392,7 +398,7 @@
                     Credits
                     <img src="./assets/format_quote.svg" alt = "quotes" class="w-6 h-6"/>
                 </h3>
-                <p>Our store uses <a href="https://fonts.google.com/icons" class="underline">Google Material Design 3</a> Icons and the <a href="mtroyal.ca" class="underline">Mount Royal University</a> logo in various places on the website.</p>
+                <p>Our store uses <a href="https://fonts.google.com/icons" target="_blank" class="underline">Google Material Design 3</a> Icons and the <a href="https://mtroyal.ca" target="_blank" class="underline">Mount Royal University</a> logo in various places on the website.</p>
             </section>
             <section class = "mb-5">
                 <h3 class = "mb-2 flex items-center gap-2 font-semibold text-amber-900">
@@ -402,7 +408,7 @@
                 <p>Ty Wagner and Parth Satikumar</p>
             </section>
             <footer class = "about-footer border-t border-amber-200 pt-4">
-                <a href = "https://github.com/psatikumar1/COMP_3612_A2" class="hover:underline">
+                <a href = "https://github.com/psatikumar1/COMP_3612_A2" target="_blank" class="hover:underline">
                     View our GitHub Repository
                 </a>
             </footer>

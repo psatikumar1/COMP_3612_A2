@@ -1,4 +1,5 @@
 import { initBrowse } from "./browse.js";
+import { getActiveView } from "./appData.js";
 /**
  * Creates a view manager object containing view objects
  * 
@@ -8,6 +9,7 @@ export function ViewManager(views) {
     this.views = views;
     
     this.showView = (viewName) => {
+        let previousView = getActiveView();
         const id = (this.views[viewName]).id;
         const viewTitle = (this.views[viewName]).title;
 
@@ -24,7 +26,8 @@ export function ViewManager(views) {
         // Set the title to match the selected view
         document.title = viewTitle;
 
-        if (viewName == "browse") {
+        console.log(getActiveView());
+        if (viewName == "browse" && previousView !== "#browse") {
             startBrowseView();
         }
     }
