@@ -3,7 +3,8 @@ import { fetchData } from "./dataFetcher.js";
 
 // List of objects given by the filter dataset
 // i.e. accordions = { brands: [], categories: []...}
-const accordions = {};
+let accordions = {};
+let selectedFilters = [];
 
 export async function initBrowse() { 
     const products = await fetchData();
@@ -15,7 +16,19 @@ export async function initBrowse() {
     }
 
     installBrowseAccordions(products);
-    //renderAllProducts(products);
+    installFilterEvents();
+}
+
+function installFilterEvents() {
+    // add to selectedFilters list
+    const filter = document.querySelector("#filter");
+    filter.addEventListener("change", (e) => {
+        if (e.target.type == "checkbox") {
+            
+        }
+    });
+    // detect change and show the "reset filters" button
+
 }
 
 function installBrowseAccordions(products) {
@@ -32,7 +45,16 @@ function installBrowseAccordions(products) {
 
         accordions[filter] = newAccordion;
 
-        // Price accordion has different requirements, so this is a separate function
+        if (filter == "brands") {
+            populateBrandsAccordion(newAccordion, products);
+            continue;
+        }
+
+        if (filter == "categories") {
+            populateCategoriesAccordion(newAccordion, products);
+            continue;
+        }
+
         if (filter === "tags") {
             populateTagsAccordion(newAccordion, products);
             continue;
@@ -47,11 +69,24 @@ function installBrowseAccordions(products) {
             populateRatingAccordion(newAccordion, products);
             continue;
         }
-
-        // Brands and Categories accordions can be filled here
-        const attributeItems = getFilterItems(filter, products);
-        populateAccordion(newAccordion, attributeItems);
     }
+}
+
+function populateBrandsAccordion(accordion, products) {
+    const brands = getBrands(products);
+    const ul = accordion.filterList;
+    for (let brand of brands) {
+        
+    }
+
+    function getBrands() {
+        let brands = [];
+        for (const product of products) {
+            brands.push(product.brand);
+        }
+        return brands;
+    }
+
 }
 
 /**
@@ -63,7 +98,7 @@ function installBrowseAccordions(products) {
  * so the attributeItems list needs to hold every brand we want to be 
  * displayed in that filter.
  */
-function populateAccordion(accordion, attributeItems) {
+function populateAccordion(accordion, attributeItems, filter) {
     const ul = accordion.filterList;
     for (let attribute of attributeItems) {
         attribute = sanitizeAttribute(attribute);
@@ -75,6 +110,9 @@ function populateAccordion(accordion, attributeItems) {
 
         const input = document.createElement("input");
         input.type = "checkbox";
+        input.className = "filter-checkbox";
+        input.dataset.filterChecked = filter;
+
         const span = document.createElement("span");
         span.className = "pl-2 text-[16px] text-stone-800";
         span.textContent = attribute;
@@ -111,6 +149,8 @@ function populatePriceAccordion(accordion, products) {
 
         const input = document.createElement("input");
         input.type = "checkbox";
+        input.dataset.filterChecked = "price";
+        input.dataset.priceRange = price.range;
 
         const div = document.createElement("div");
         div.className = "flex w-full items-center justify-between";
@@ -188,6 +228,8 @@ function populateTagsAccordion(accordion, products) {
         
         const input = document.createElement("input");
         input.type = "checkbox";
+        input.dataset.filterChecked = "tags";
+
         const span = document.createElement("span");
         span.className = "pl-2 text-[16px] text-stone-800";
         span.textContent = tag;
@@ -226,9 +268,10 @@ function populateRatingAccordion(accordion, products) {
 
         const input = document.createElement("input");
         input.type = "checkbox";
+        input.dataset.filterChecked = "rating";
         input.dataset.starRating = i + 1;
 
-        const stars = getNumStars1(i + 1);
+        const stars = getNumStars(i + 1);
 
         label.append(input, stars);
         li.append(label);
@@ -290,25 +333,4 @@ function medianOfList(list) {
     }
 
     return median;
-}
-
-/**
- * TODO: NOT COMPLETED
- * @brief Renders all product cards. Typically used only on initial load 
- * of the Browse view.
- * @param products all product JSON data
- */
-function renderAllProducts(products) {
-    // Create product cards
-    let searchResults = document.querySelector("#search-results");
-    for (const product of products) {
-        const productCard = createCard();
-        searchResults.appendChild(productCard);
-    }
-
-    // Add product cards to #search-results
-}
-
-function createCard(product) {
-    
 }

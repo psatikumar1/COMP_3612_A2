@@ -1,5 +1,3 @@
-import { initBrowse } from "./browse.js";
-
 // key to access products in the local storage
 const PRODUCTS_STORE_KEY = "products";
 
