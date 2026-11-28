@@ -76,7 +76,7 @@ function updateProductsShowing(products) {
             (product.category && category.includes(sanitizeAttribute(product.category))); //Added sanitizeAttribute(---) so 2 sanitized items are compared.
         
         const showTags = tags.length == 0 ||
-            product.tags.some(tag => tags.includes((tag)));
+            product.tags.some(tag => tags.includes((sanitizeAttribute(tag))));
         
         const showPrice = price.length == 0 ||
             price.some(range => inPriceRange(product.price, range));
@@ -361,7 +361,7 @@ function populateTagsAccordion(accordion, products) {
         const li = document.createElement("li");
         li.className = "ml-2";
 
-        const label = document.createElement("li");
+        const label = document.createElement("label");
         label.className = "flex hover:cursor-pointer";
         
         const input = document.createElement("input");
@@ -384,7 +384,7 @@ function populateTagsAccordion(accordion, products) {
             const productTags = product.tags;
             for (let tag of productTags) {
                 // make sure the first letter is capitalized
-                tag = tag.charAt(0).toUpperCase() + tag.slice(1);
+                tag = sanitizeAttribute(tag);
                 if (!tagList.includes(tag)) {
                     tagList.push(tag);
                 }
