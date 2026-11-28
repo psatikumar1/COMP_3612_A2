@@ -508,7 +508,7 @@ export function installHomeProductEventListeners(){
 /** 
  * Load and display the clicked home product 
  */
-async function openHomeProduct(event){
+export async function openHomeProduct(event){
     event.preventDefault();
 
     const card = event.currentTarget;

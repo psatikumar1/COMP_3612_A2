@@ -1,6 +1,6 @@
 import { Accordion } from "./accordion.js";
 import { fetchData } from "./dataFetcher.js";
-
+import { openHomeProduct } from "./eventListeners.js";
 // List of objects given by the filter dataset
 // i.e. accordions = { brands: [], categories: []...}
 let accordions = {};
@@ -109,14 +109,7 @@ function createCard(product) {
     productCard.className = "product-card w-full h-max flex flex-col items-center";
     
     const productCardBtn = createCardButton(product); 
-
-    // add to cart button
-    const addToCartBtn = document.createElement("button");
-    addToCartBtn.className = "add-to-cart-btn my-1.5 bg-stone-800 rounded-md w-full text-white text-[16px] font-semibold py-1.5 hover:cursor-pointer hover:bg-stone-700";
-    addToCartBtn.dataset.productID = product.id;
-    addToCartBtn.textContent = "Add to Cart";
-
-    productCard.append(productCardBtn, addToCartBtn);
+    productCard.append(productCardBtn);
     return productCard;
 }
 
@@ -124,6 +117,8 @@ function createCardButton(product) {
     const cardButton = document.createElement("div");
 
     cardButton.className = "product-card-button w-full";
+    cardButton.dataset.productId = product.id;
+    cardButton.addEventListener("click", openHomeProduct);
     
     const productCardImgContainer = document.createElement("div");
     productCardImgContainer.className = "product-card-img bg-stone-200 hover:cursor-pointer aspect-square";
