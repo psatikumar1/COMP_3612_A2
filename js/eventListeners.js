@@ -138,20 +138,20 @@ async function openCategoryProducts(category, categoryName){
         return;
     }
 
-    if (data == null){
+    if (data == null){ 
         alert("Products could not be loaded");
         return;
     }
 
     const products = [];
-    for(let product of data.products){
+    for(let product of data){ //'data' is the product list
         if(product.category === category){
             products.push(product);
         }
     }
 
+    await views.showView("browse"); //Swapped order  to ensure only the subcategory's products go on the browse pge and added 'await' so picked cateogry doesnt get overwritten
     displayBrowseProducts(products, categoryName);
-    views.showView("browse");
 }
 
 

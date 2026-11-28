@@ -28,7 +28,7 @@ export function ViewManager(views) {
 
         console.log(getActiveView());
         if (viewName == "browse" && previousView !== "#browse") {
-            startBrowseView();
+            return startBrowseView();
         }
     }
 }
