@@ -73,7 +73,7 @@ function updateProductsShowing(products) {
             (brands.includes(product.brand));
         
         const showCategory = category.length == 0 ||
-            (product.category && category.includes(product.category));
+            (product.category && category.includes(sanitizeAttribute(product.category))); //Added sanitizeAttribute(---) so 2 sanitized items are compared.
         
         const showTags = tags.length == 0 ||
             product.tags.some(tag => tags.includes((tag)));
