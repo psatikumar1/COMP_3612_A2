@@ -106,8 +106,7 @@ function showProducts(visibleProducts) {
 
 function createCard(product) {
     const productCard = document.createElement("div");
-    productCard.className = "product-card w-full h-max flex flex-col items-center";
-    
+    productCard.className = "product-card w-full h-max flex flex-col items-center bg-white rounded-xl p-3 shadow-sm hover:-translate-y-1 hover:shadow-lg"; //https://tailwindcss.com/docs/translate
     const productCardBtn = createCardButton(product); 
     productCard.append(productCardBtn);
     return productCard;
