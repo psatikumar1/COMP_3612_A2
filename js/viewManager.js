@@ -1,5 +1,10 @@
 import { initBrowse } from "./browse.js";
 import { getActiveView } from "./appData.js";
+
+//Keep raise a flag if browse has been previously modified in this session.
+//So going back to Browse page after a Sub-category was loaded into the browse page takes you back to the 
+//Subcategory page products instead of initBrowse(); 
+let browseLoaded = false;
 /**
  * Creates a view manager object containing view objects
  * 
@@ -9,7 +14,6 @@ export function ViewManager(views) {
     this.views = views;
     
     this.showView = (viewName) => {
-        let previousView = getActiveView();
         const id = (this.views[viewName]).id;
         const viewTitle = (this.views[viewName]).title;
 
@@ -27,7 +31,8 @@ export function ViewManager(views) {
         document.title = viewTitle;
 
         console.log(getActiveView());
-        if (viewName == "browse" && previousView !== "#browse") {
+        if (viewName == "browse" && !browseLoaded) {
+            browseLoaded = true;
             return startBrowseView();
         }
     }
