@@ -14,6 +14,7 @@ async function init() {
     });
 
     EventListeners.installHeaderEventListeners(views);
+    EventListeners.installCartEventListeners();
     const data = await fetchData();
 }
 // function init() {

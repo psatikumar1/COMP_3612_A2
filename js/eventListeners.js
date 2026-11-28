@@ -306,7 +306,7 @@ function addToCart(event){
 async function addHomeToCart(event){
     const button = event.currentTarget;
     const card = button.parentElement;
-    const productLink = document.querySelector(".product-cart-button");
+    const productLink = card.querySelector(".product-card-button");
 
     const product = await fetchProduct(productLink.dataset.productId);
     updateCart(product, 1);

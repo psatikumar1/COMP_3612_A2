@@ -36,7 +36,7 @@ async function requestData(url) {
     }
     try {
         const savedData = checkIfSaved();
-        if (savedData) {
+        if (savedData && !url) { //No specific product was asked for
             console.log("Returning saved data");
             return (JSON.parse(savedData));
         }
@@ -50,6 +50,9 @@ async function requestData(url) {
         }
 
         const result = await response.json();
+        if(url){ // A particular product was asked for
+            return result;
+        }
         storeData(result.products);
         return result.products;
     } catch (error) {
