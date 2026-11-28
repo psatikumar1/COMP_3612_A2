@@ -4,11 +4,25 @@ import { fetchData } from "./dataFetcher.js";
 // List of objects given by the filter dataset
 // i.e. accordions = { brands: [], categories: []...}
 let accordions = {};
-let selectedFilters = [];
+// [{brands: [brand1, brand2, brand3]}]
+let selectedFilters = {brands: [],
+                       category: [],
+                       tags: [],
+                       price: [], // {rangeStr: str, low: number, high: number}
+                       rating: []};
+const priceRanges = 
+    [{range: "$0 - $10",    low: 0,   high: 10},
+     {range: "$10 - $25",   low: 10,  high: 25},
+     {range: "$25 - $50",   low: 25,  high: 50},
+     {range: "$50 - $100",  low: 50,  high: 100},
+     {range: "$100 - $500", low: 100, high: 500},
+     {range: "$500+",       low: 500, high: Number.MAX_SAFE_INTEGER}
+    ];
 
 export async function initBrowse() { 
     const products = await fetchData();
 
+    showProducts(products);
     // remove old stuff (if it exists)
     for (const idx in accordions) {
         accordions[idx].destroy();
@@ -16,19 +30,159 @@ export async function initBrowse() {
     }
 
     installBrowseAccordions(products);
-    installFilterEvents();
+    installFilterEvents(products);
 }
 
-function installFilterEvents() {
+function installFilterEvents(products) {
     // add to selectedFilters list
     const filter = document.querySelector("#filter");
     filter.addEventListener("change", (e) => {
-        if (e.target.type == "checkbox") {
-            
+        const type = e.target.dataset.filterChecked;
+        const name = e.target.dataset.attributeName;
+        const list = selectedFilters[type];
+        
+        if (e.target.checked) {
+            if (type === "price") {
+
+                const range = priceRanges.find(r => r.range === name);
+                if (range && !list.includes(range)) {
+                    list.push(range);
+                }
+
+            } else if (!list.includes(name)) {
+                console.log(name);
+                list.push(name);
+            }
+
+        } else {
+            selectedFilters[type] = list.filter(filterItem => 
+                (type === "price" ? filterItem.range : filterItem) !== name);
         }
+        updateProductsShowing(products);
     });
     // detect change and show the "reset filters" button
+}
 
+function updateProductsShowing(products) {
+    const {brands, category, tags, price, rating} = selectedFilters;
+
+    const visibleProducts = products.filter(product => {
+        // if the length of any list is empty, we show all since no selection does not mean
+        // "show none"
+        const showBrand = brands.length == 0 || 
+            (brands.includes(product.brand));
+        
+        const showCategory = category.length == 0 ||
+            (product.category && category.includes(product.category));
+        
+        const showTags = tags.length == 0 ||
+            product.tags.some(tag => tags.includes((tag)));
+        
+        const showPrice = price.length == 0 ||
+            price.some(range => inPriceRange(product.price, range));
+        
+        // rating is actually a string here from the JSON data so we need to parse into int
+        const showRating = rating.length == 0 ||
+            rating.some(rating => Math.floor(product.rating) === parseInt(rating)) ||
+            product.rating > 4; // floor will bring a rating of 4.9 down to 4, so anything > 4 && <= 5 won't be showns
+        
+        return showBrand && showCategory && showTags && showPrice && showRating;
+    });
+    console.log(selectedFilters);
+
+    showProducts(visibleProducts);
+}
+
+function showProducts(visibleProducts) {
+    console.log(`Displaying: ${visibleProducts.length} products`);
+
+    const searchResults = document.querySelector("#search-results");
+    searchResults.innerHTML = "";
+    for (const product of visibleProducts) {
+        const productCard = createCard(product);
+        searchResults.appendChild(productCard);
+    }
+}
+
+function createCard(product) {
+    const productCard = document.createElement("div");
+    productCard.className = "product-card w-full h-max flex flex-col items-center";
+    
+    const productCardBtn = createCardButton(product); 
+
+    // add to cart button
+    const addToCartBtn = document.createElement("button");
+    addToCartBtn.className = "add-to-cart-btn my-1.5 bg-stone-800 rounded-md w-full text-white text-[16px] font-semibold py-1.5 hover:cursor-pointer hover:bg-stone-700";
+    addToCartBtn.dataset.productID = product.id;
+    addToCartBtn.textContent = "Add to Cart";
+
+    productCard.append(productCardBtn, addToCartBtn);
+    return productCard;
+}
+
+function createCardButton(product) {
+    const cardButton = document.createElement("div");
+
+    cardButton.className = "product-card-button w-full";
+    
+    const productCardImgContainer = document.createElement("div");
+    productCardImgContainer.className = "product-card-img bg-stone-200 hover:cursor-pointer aspect-square";
+    const img = document.createElement("img");
+    img.className = "w-full";
+    img.src = product.thumbnail;
+    productCardImgContainer.appendChild(img);
+
+    const productInfoContainer = document.createElement("div");
+    productInfoContainer.className = "product-info text-left grid gap-1 mt-2";
+    const a = document.createElement("a");
+    a.className = "hover:cursor-pointer hover:underline text-[16px] grid gap-1";
+    const brand = document.createElement("h2");
+    brand.className = "product-card-brand font-semibold";
+    brand.textContent = getBrand(product);
+    const prodName = document.createElement("h3");
+    prodName.className = "product-card-name";
+    prodName.textContent = product.title;
+    a.append(brand, prodName);
+    
+    const productPriceContainer = document.createElement("div");
+    productPriceContainer.className = "product-card-price flex flex-wrap gap-2";
+    const ogPrice = document.createElement("p");
+    ogPrice.className = "original-product-price strikethrough";
+    const priceText = document.createElement("s"); 
+    priceText.textContent = `$${Math.round(product.price * 100) / 100}`;
+    ogPrice.appendChild(priceText);
+    const discPrice = document.createElement("p");
+    discPrice.className = "discounted-product-price text-red-800";
+    discPrice.textContent = `$${discountedPrice(product.price, product.discountPercentage)}`;
+    const percentDisc = document.createElement("p");
+    percentDisc.className = "percent-discount text-red-800";
+    percentDisc.textContent = `(${product.discountPercentage}% off)`;
+    productPriceContainer.append(ogPrice, discPrice, percentDisc);
+
+    productInfoContainer.append(a, productPriceContainer);
+
+    cardButton.append(productCardImgContainer, productInfoContainer);
+
+    return cardButton;
+}
+
+function getBrand(product) {
+    if (product.category === "groceries") {
+        return "Grocery";
+    }
+    if (!product.brand) {
+        return sanitizeAttribute(product.category);
+    }
+    return product.brand;
+}
+
+function inPriceRange(price, range) {
+    return price > range.low && price <= range.high;
+}
+
+function discountedPrice(price, discount) {
+    discount = discount / 100;
+    return Math.round(price * discount * 100) / 100;
 }
 
 function installBrowseAccordions(products) {
@@ -76,61 +230,42 @@ function populateBrandsAccordion(accordion, products) {
     const brands = getBrands(products);
     const ul = accordion.filterList;
     for (let brand of brands) {
-        
+        brand = sanitizeAttribute(brand);
+        const li = createListElement("brands", brand);
+        ul.append(li);
     }
 
     function getBrands() {
-        let brands = [];
+        let brandList = [];
         for (const product of products) {
-            brands.push(product.brand);
+            if (product.brand && !brandList.includes(product.brand)) {
+                brandList.push(product.brand);
+            } 
         }
-        return brands;
+        return brandList;
     }
 
 }
 
-/**
- * 
- * @param {*} accordion Accordion filter object
- * @param {*} attributeItems Attributes that need to be populated 
- * into the accordion. 
- * e.g. accordion can be the accordion representing the brands filter,
- * so the attributeItems list needs to hold every brand we want to be 
- * displayed in that filter.
- */
-function populateAccordion(accordion, attributeItems, filter) {
+function populateCategoriesAccordion(accordion, products) {
+    const categories = getCategories(products);
     const ul = accordion.filterList;
-    for (let attribute of attributeItems) {
-        attribute = sanitizeAttribute(attribute);
-        const li = document.createElement("li");
-        li.className = "ml-2";
-
-        const label = document.createElement("label");
-        label.className = "flex hover:cursor-pointer text-stone-800";
-
-        const input = document.createElement("input");
-        input.type = "checkbox";
-        input.className = "filter-checkbox";
-        input.dataset.filterChecked = filter;
-
-        const span = document.createElement("span");
-        span.className = "pl-2 text-[16px] text-stone-800";
-        span.textContent = attribute;
-
-        label.appendChild(input);
-        label.appendChild(span);
-
-        li.appendChild(label);
-        ul.appendChild(li);
+    for (let category of categories) {
+        category = sanitizeAttribute(category);
+        const li = createListElement("category", category);
+        ul.append(li);
     }
 
-    function sanitizeAttribute(attribute) {
-        let sanitizedAttribute = attribute.replace('-', ' ');
-        sanitizedAttribute = sanitizedAttribute.charAt(0).toUpperCase() + sanitizedAttribute.slice(1);        
-        return sanitizedAttribute;
+    function getCategories() {
+        let categoriesList = [];
+        for (const product of products) {
+            if (product.category && !categoriesList.includes(product.category)) {
+                categoriesList.push(product.category);
+            }
+        }
+        return categoriesList;
     }
 }
-
 
 /**
  * @brief Populates the price filter accordion
@@ -138,9 +273,10 @@ function populateAccordion(accordion, attributeItems, filter) {
  * @param {*} products 
  */
 function populatePriceAccordion(accordion, products) {
-    let priceRanges = getPriceRanges(products);
+    let priceCounts = getPriceRanges(products);
 
     const ul = accordion.filterList;
+    let idx = 0;
     for (const price of priceRanges) {
         const li = document.createElement("li");
 
@@ -150,7 +286,7 @@ function populatePriceAccordion(accordion, products) {
         const input = document.createElement("input");
         input.type = "checkbox";
         input.dataset.filterChecked = "price";
-        input.dataset.priceRange = price.range;
+        input.dataset.attributeName = price.range;
 
         const div = document.createElement("div");
         div.className = "flex w-full items-center justify-between";
@@ -161,7 +297,7 @@ function populatePriceAccordion(accordion, products) {
 
         const countSpan = document.createElement("span");
         countSpan.className = "pr-2 text-[16px] text-stone-800";
-        countSpan.textContent = `(${price.count})`;
+        countSpan.textContent = `(${priceCounts[idx]})`;
 
         div.appendChild(priceSpan);
         div.appendChild(countSpan);
@@ -171,6 +307,8 @@ function populatePriceAccordion(accordion, products) {
 
         li.appendChild(label);
         ul.appendChild(li);
+
+        idx++;
     }
     /**
     * @brief Gets the list of price ranges that should be used to filter 
@@ -202,12 +340,12 @@ function populatePriceAccordion(accordion, products) {
             }
         }
 
-        return [{range: "$0 - $10",    count: price0_10},
-                {range: "$11 - $25",   count: price11_25},
-                {range: "$26 - $50",   count: price26_50},
-                {range: "$51 - $100",  count: price51_100},
-                {range: "$101 - $500", count: price101_500},
-                {range: "$501+",       count: price501_up}];
+        return [price0_10,
+                price11_25,
+                price26_50,
+                price51_100,
+                price101_500,
+                price501_up];
     }
 }
 
@@ -228,6 +366,7 @@ function populateTagsAccordion(accordion, products) {
         
         const input = document.createElement("input");
         input.type = "checkbox";
+        input.dataset.attributeName = tag;
         input.dataset.filterChecked = "tags";
 
         const span = document.createElement("span");
@@ -268,6 +407,7 @@ function populateRatingAccordion(accordion, products) {
 
         const input = document.createElement("input");
         input.type = "checkbox";
+        input.dataset.attributeName = `${i + 1}stars`;
         input.dataset.filterChecked = "rating";
         input.dataset.starRating = i + 1;
 
@@ -291,46 +431,29 @@ function populateRatingAccordion(accordion, products) {
     }
 }
 
-function getFilterItems(attribute, products) {
-    // e.g. if filter is "brands" we will grab all brand names 
-    // from products and insert them here
-
-    if (attribute === "brands") {
-        attribute = "brand";
-    }
-
-    if (attribute === "categories") {
-        attribute = "category";
-    }
-
-    const attributeItems = [];
-    for (const product of products) {
-        const productKey = product[attribute];
-        // If productKey is not undefined and not in the list, add it
-        if (!attributeItems.includes(productKey) && productKey) {
-            attributeItems.push(productKey);
-        }
-    }
-
-    return attributeItems;
+function sanitizeAttribute(attribute) {
+    let sanitizedAttribute = attribute.replace('-', ' ');
+    sanitizedAttribute = sanitizedAttribute.charAt(0).toUpperCase() + sanitizedAttribute.slice(1);        
+    return sanitizedAttribute;
 }
 
-/**
- * @brief Finds the median value of the given list
- * @param {} products list of products
- * @returns median numerical value of the given list
- */
-function medianOfList(list) {
-    let length = list.length;
-    let median;
-    
-    if (length % 2 == 0) {
-        let low = Math.floor(length / 2);
-        let high = Math.ceil(length / 2);
-        median = (list[low] + list[high]) / 2;
-    } else {
-        median = list[length / 2].price;
-    }
+function createListElement(filterCategory, attribute) {
+    const li = document.createElement("li");
+    li.className = "ml-2";
 
-    return median;
+    const label = document.createElement("label");
+    label.className = "flex hover:cursor-pointer";
+
+    const input = document.createElement("input");
+    input.type = "checkbox";
+    input.dataset.filterChecked = filterCategory;
+    input.dataset.attributeName = attribute;
+    const span = document.createElement("span");
+    span.className = "pl-2 text-[16px]";
+    span.textContent = attribute;
+
+    label.append(input, span);
+    li.append(label);
+    
+    return li;
 }
