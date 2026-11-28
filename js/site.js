@@ -16,3 +16,12 @@ async function init() {
     EventListeners.installHeaderEventListeners(views);
     const data = await fetchData();
 }
+// function init() {
+//     // Install Static Listeners
+//     EventListeners.installHeaderEventListeners();
+//     EventListeners.installCartEventListeners();
+//     EventListeners.installHomeProductEventListeners();
+//     EventListeners.installCategoryEventListeners();
+//     let accordions = EventListeners.installBrowseAccordionEventListeners();
+//     const data = EventListeners.installDataFetcher();
+// }

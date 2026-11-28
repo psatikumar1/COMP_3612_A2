@@ -19,13 +19,21 @@ function checkIfSaved() {
     return null;
 }
 
+export function fetchProduct(productId){
+    const url = "https://dummyjson.com/products/" + productId;
+    return requestData(url); 
+}
+
 /**
  * Requests the product data from the server
  * From MDN docs fetch API
  * https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
  */
-async function requestData() {
-    const url = "https://dummyjson.com/products?limit=0";
+async function requestData(url) {
+    let newURL = "https://dummyjson.com/products?limit=0";
+    if (url) {
+        newURL = url; 
+    }
     try {
         const savedData = checkIfSaved();
         if (savedData) {
@@ -34,7 +42,7 @@ async function requestData() {
         }
 
         console.log("Fetching data from server");
-        const response = await fetch(url);
+        const response = await fetch(newURL);
         // Check if error was 404 not found (other errors will be rejected automatically
         // by await fetch(url))
         if (!response.ok) {
